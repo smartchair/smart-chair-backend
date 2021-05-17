@@ -14,10 +14,10 @@ def generateHash(word: Any):
 
 def verify_password(stored_password, provided_password):
     salt = stored_password[:64]
-    stored_password = stored_password[64:]
+    user_pass = stored_password[64:]
     pwdhash = hashlib.pbkdf2_hmac('sha512',
                                   provided_password.encode('utf-8'),
                                   salt,
                                   100000)
-    pwdhash = binascii.hexlify(pwdhash).decode('ascii')
-    return pwdhash == stored_password.decode('ascii')
+    pwdhash = binascii.hexlify(pwdhash)
+    return pwdhash == user_pass
