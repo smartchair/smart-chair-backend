@@ -17,3 +17,14 @@ class UserInfo(BaseModel):
         json_encoders = {
             ObjectId: str
         }
+
+
+class UserLogin(BaseModel):
+    username: str
+    password: str
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {
+            ObjectId: str
+        }

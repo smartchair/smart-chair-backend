@@ -42,7 +42,7 @@ def query_user(user_id: str):
 
 
 @application.post('/users/login')
-async def login(data: OAuth2PasswordRequestForm = Depends()):
+async def login(data: model.UserLogin):
     email = data.username
     password = data.password
 
