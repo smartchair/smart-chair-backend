@@ -5,7 +5,6 @@ from fastapi import FastAPI, Response, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 from fastapi_login import LoginManager
 from fastapi_login.exceptions import InvalidCredentialsException
-from starlette import status
 
 import model
 from apis import ChairInfoApi, UserApi
