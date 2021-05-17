@@ -33,10 +33,10 @@ class UserApi:
     def login(user, data: model.UserLogin):
         password = data.password
         print('armazenado ' + str(user['password']['key']))
-        print ('enviado ' + password)
+        print('enviado ' + password)
         if not user:
             return {"status": 'no user'}
-        elif verify_password(user['password'], password):
+        elif not verify_password(user['password'], password):
             return {'status': 'wrong_pass'}
         else:
             return {'status': 'Success'}
