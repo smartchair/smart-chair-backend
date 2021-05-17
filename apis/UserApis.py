@@ -32,7 +32,7 @@ class UserApi:
     @staticmethod
     def login(user, data: model.UserLogin):
         password = data.password
-        print('armazenado ' + user['password']['key'])
+        print('armazenado ' + str(user['password']['key']))
         print ('enviado ' + password)
         if not user:
             return {"status": 'no user'}
