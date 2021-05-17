@@ -8,6 +8,7 @@ from fastapi_login.exceptions import InvalidCredentialsException
 
 import model
 from apis import ChairInfoApi, UserApi
+from utils.passUtils import verify_password
 
 application = FastAPI()
 
@@ -48,7 +49,7 @@ async def login(data: OAuth2PasswordRequestForm = Depends()):
     user = query_user(email)
     if not user:
         raise InvalidCredentialsException
-    elif password != user['password']:
+    elif verify_password(user['password'], password):
         raise InvalidCredentialsException
 
     return {'status': 'Success'}
