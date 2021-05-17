@@ -15,12 +15,13 @@ def generateHash(word: Any):
 def verify_password(stored_password, provided_password):
     salt = stored_password['salt']
     key = stored_password['key']
-    print('enviado: ' + provided_password)
     pwdhash = hashlib.pbkdf2_hmac('sha512',
                                   provided_password.encode('utf-8'),
                                   salt,
                                   100000)
     pwdhash = binascii.hexlify(pwdhash)
-    print('hash: ' + str(pwdhash))
-    print('key:' + str(key))
-    return str(pwdhash) == key
+    if str(pwdhash) == key:
+        print(str(pwdhash))
+        return True
+    else:
+        return False
