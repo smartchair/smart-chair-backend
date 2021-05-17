@@ -27,7 +27,7 @@ async def log_info(chair_info: model.ChairInfo):
     return chair_apis.log_chair_info(chair_info)
 
 
-@application.post('/create/user')
+@application.post('/create/user', status_code=status.HTTP_201_CREATED)
 async def create_user(user_info: model.UserInfo, response: Response):
     if hasattr(user_info, 'id'):
         delattr(user_info, 'id')
