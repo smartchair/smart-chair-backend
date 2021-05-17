@@ -9,7 +9,7 @@ def generateHash(word: Any):
     pwdhash = hashlib.pbkdf2_hmac('sha512', word.encode('utf-8'),
                                   salt, 100000)
     pwdhash = binascii.hexlify(pwdhash)
-    return (salt + pwdhash).decode('ascii')
+    return (pwdhash + salt).decode('ascii')
 
 
 def verify_password(stored_password, provided_password):
