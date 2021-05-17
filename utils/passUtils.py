@@ -9,6 +9,8 @@ def generateHash(word: Any):
     pwdhash = hashlib.pbkdf2_hmac('sha512', word.encode('utf-8'),
                                   salt, 100000)
     pwdhash = binascii.hexlify(pwdhash)
+    print("salt" + str(salt))
+    print('key' + str(pwdhash))
     return {'salt': salt, 'key': pwdhash}
 
 
