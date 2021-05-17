@@ -48,8 +48,8 @@ async def login(data: model.UserLogin):
 
     user = query_user(email)
     if not user:
-        return {"status":'no user'}
+        return {"status": 'no user'}
     elif verify_password(user['password'], password):
-        return {'status':'wrong_pass'}
+        return {'status': 'wrong_pass'}
 
     return {'status': 'Success'}

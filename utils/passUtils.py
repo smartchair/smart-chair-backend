@@ -25,4 +25,4 @@ def verify_password(stored_password, provided_password):
                                   100000)
     pwdhash = binascii.hexlify(pwdhash)
     print(pwdhash)
-    return pwdhash == key
+    return str(pwdhash) == key
