@@ -1,17 +1,21 @@
 import os
 
 import pymongo as pymongo
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response, Depends
+from fastapi.security import OAuth2PasswordRequestForm
+from fastapi_login import LoginManager
+from fastapi_login.exceptions import InvalidCredentialsException
 from starlette import status
 
 import model
 from apis import ChairInfoApi, UserApi
-from utils import generateHash
 
 application = FastAPI()
 
 ClIENT = pymongo.MongoClient(os.environ.get('MONGOURL'))
-# SECRET = os.environ.get('SECRET_KEY')
+SECRET = os.environ.get('SECRET_KEY')
+
+manager = LoginManager(SECRET, token_url='/users/login')
 
 chair_apis = ChairInfoApi(ClIENT)
 user_apis = UserApi(ClIENT)
@@ -27,17 +31,25 @@ async def log_info(chair_info: model.ChairInfo):
     return chair_apis.log_chair_info(chair_info)
 
 
-@application.post('/create/user', status_code=status.HTTP_201_CREATED)
+@application.post('/users/create_user')
 async def create_user(user_info: model.UserInfo, response: Response):
-    if hasattr(user_info, 'id'):
-        delattr(user_info, 'id')
-    users_db = ClIENT.users
-    is_present = users_db['users'].find_one({"email": user_info.email})
-    if is_present is not None:
-        response.status_code = status.HTTP_200_OK
-        return {"status": 'fail'}
-    user_info.password = generateHash(user_info.password).encode('utf-8')
-    new = users_db['users'].insert_one(user_info.dict(by_alias=True))
-    user_info.id = new.inserted_id
-    response.status_code = status.HTTP_201_CREATED
-    return {'status': 'success', 'data': user_info}
+    return user_apis.create_user(user_info, response)
+
+
+@manager.user_loader
+def query_user(user_id: str):
+    return user_apis.query_user(user_id)
+
+
+@application.post('/users/login')
+async def login(data: OAuth2PasswordRequestForm = Depends()):
+    email = data.username
+    password = data.password
+
+    user = query_user(email)
+    if not user:
+        raise InvalidCredentialsException
+    elif password != user['password']:
+        raise InvalidCredentialsException
+
+    return {'status': 'Success'}

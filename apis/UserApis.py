@@ -1,4 +1,5 @@
-from fastapi.openapi.models import Response
+from fastapi import Response, Depends
+from fastapi.security import OAuth2PasswordRequestForm
 from starlette import status
 
 import model
@@ -22,3 +23,7 @@ class UserApi:
         user_info.id = new.inserted_id
         response.status_code = status.HTTP_201_CREATED
         return {'status': 'success', 'data': user_info}
+
+    def query_user(self, user_id: str):
+        users_db = self.client.users
+        return users_db['users'].find_one({"email": user_id})
