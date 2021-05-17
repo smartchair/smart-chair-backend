@@ -1,8 +1,7 @@
 import os
 
 import pymongo as pymongo
-from fastapi import FastAPI
-from fastapi.openapi.models import Response
+from fastapi import FastAPI, Response
 from starlette import status
 
 import model
