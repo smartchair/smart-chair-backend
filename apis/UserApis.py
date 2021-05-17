@@ -37,5 +37,5 @@ class UserApi:
             return {"status": 'no user'}
         elif verify_password(user['password'], password):
             return {'status': 'wrong_pass'}
-
-        return {'status': 'Success'}
+        else:
+            return {'status': 'Success'}
