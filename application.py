@@ -10,7 +10,7 @@ from apis import ChairInfoApi, UserApi
 application = FastAPI()
 
 ClIENT = pymongo.MongoClient(os.environ.get('MONGOURL'))
-SECRET = os.environ.get('SECRET_KEY')
+# SECRET = os.environ.get('SECRET_KEY')
 
 chair_apis = ChairInfoApi(ClIENT)
 user_apis = UserApi(ClIENT)
