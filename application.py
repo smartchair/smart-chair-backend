@@ -43,13 +43,4 @@ def query_user(user_id: str):
 
 @application.post('/users/login')
 async def login(data: model.UserLogin):
-    email = data.username
-    password = data.password
-
-    user = query_user(email)
-    if not user:
-        return {"status": 'no user'}
-    elif verify_password(user['password'], password):
-        return {'status': 'wrong_pass'}
-
-    return {'status': 'Success'}
+    return user_apis.login(query_user(data.username), data)

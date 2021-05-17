@@ -4,6 +4,7 @@ from starlette import status
 
 import model
 from utils import generateHash
+from utils.passUtils import verify_password
 
 
 class UserApi:
@@ -27,3 +28,14 @@ class UserApi:
     def query_user(self, user_id: str):
         users_db = self.client.users
         return users_db['users'].find_one({"email": user_id})
+
+    @staticmethod
+    def login(user, data: model.UserLogin):
+        password = data.password
+
+        if not user:
+            return {"status": 'no user'}
+        elif verify_password(user['password'], password):
+            return {'status': 'wrong_pass'}
+
+        return {'status': 'Success'}

@@ -9,20 +9,15 @@ def generateHash(word: Any):
     pwdhash = hashlib.pbkdf2_hmac('sha512', word.encode('utf-8'),
                                   salt, 100000)
     pwdhash = binascii.hexlify(pwdhash)
-    print("salt" + str(salt))
-    print('key' + str(pwdhash))
     return {'salt': salt, 'key': pwdhash}
 
 
 def verify_password(stored_password, provided_password):
     salt = stored_password['salt']
-    print(salt)
     key = stored_password['key']
-    print(key)
     pwdhash = hashlib.pbkdf2_hmac('sha512',
                                   provided_password.encode('utf-8'),
                                   salt,
                                   100000)
     pwdhash = binascii.hexlify(pwdhash)
-    print(pwdhash)
     return str(pwdhash) == key
