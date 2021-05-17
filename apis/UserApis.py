@@ -18,7 +18,7 @@ class UserApi:
         if is_present is not None:
             response.status_code = status.HTTP_200_OK
             return {"status": 'fail'}
-        user_info.password = generateHash(user_info.password).encode('utf-8')
+        user_info.password = generateHash(user_info.password)
         new = users_db['users'].insert_one(user_info.dict(by_alias=True))
         user_info.id = new.inserted_id
         response.status_code = status.HTTP_201_CREATED

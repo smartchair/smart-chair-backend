@@ -9,7 +9,7 @@ from model.PyObjectIdClass import PyObjectId
 class UserInfo(BaseModel):
     id: Optional[PyObjectId] = Field(alias='_id')
     email: str
-    password: str
+    password: Any
     chairsId: Any
 
     class Config:
