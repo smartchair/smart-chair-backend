@@ -48,8 +48,8 @@ async def login(data: model.UserLogin):
 
     user = query_user(email)
     if not user:
-        raise InvalidCredentialsException
+        return {"status":'no user'}
     elif verify_password(user['password'], password):
-        raise InvalidCredentialsException
+        return {'status':'wrong_pass'}
 
     return {'status': 'Success'}
