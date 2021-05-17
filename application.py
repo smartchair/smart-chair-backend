@@ -23,7 +23,7 @@ async def hello_world():
 
 @application.post('/log/info')
 async def log_info(chair_info: model.ChairInfo):
-    chair_apis.log_chair_info(chair_info)
+    return chair_apis.log_chair_info(chair_info)
 
 
 @application.post('/create/user')
