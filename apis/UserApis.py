@@ -34,7 +34,6 @@ class UserApi:
         password = data.password
         if not user:
             return {"status": 'no user'}
-        elif not verify_password(user['password'], password):
+        if not verify_password(user['password'], password):
             return {'status': 'wrong_pass'}
-        else:
-            return {'status': 'Success'}
+        return {'status': 'Success'}
