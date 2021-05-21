@@ -1,14 +1,11 @@
 import os
 
 import pymongo as pymongo
-from fastapi import FastAPI, Response, Depends
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import FastAPI, Response
 from fastapi_login import LoginManager
-from fastapi_login.exceptions import InvalidCredentialsException
 
 import model
 from apis import ChairInfoApi, UserApi
-from utils.passUtils import verify_password
 
 application = FastAPI()
 
@@ -42,5 +39,5 @@ def query_user(user_id: str):
 
 
 @application.post('/users/login')
-async def login(data: model.UserLogin):
-    return user_apis.login(query_user(data.username), data)
+async def login(data: model.UserLogin, response: Response):
+    return user_apis.login(query_user(data.username), data, manager, response)

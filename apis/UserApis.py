@@ -1,9 +1,11 @@
-from fastapi import Response, Depends
-from fastapi.security import OAuth2PasswordRequestForm
+from fastapi import Response
+from fastapi_login import LoginManager
+from fastapi_login.exceptions import InvalidCredentialsException
 from starlette import status
 
 import model
-from utils import generateHash
+from utils import generateHash, returnError
+from utils.jsonReturnUtils import returnCreateUser, returnLogin
 from utils.passUtils import verify_password
 
 
@@ -17,23 +19,33 @@ class UserApi:
         users_db = self.client.users
         is_present = users_db['users'].find_one({"email": user_info.email})
         if is_present is not None:
-            response.status_code = status.HTTP_200_OK
-            return {"status": 'fail'}
+            response.status_code = status.HTTP_204_NO_CONTENT
+            return returnError(statusCode=status.HTTP_204_NO_CONTENT,
+                               title="user already registered",
+                               detail="email already taken")
         user_info.password = generateHash(user_info.password)
         new = users_db['users'].insert_one(user_info.dict(by_alias=True))
         user_info.id = new.inserted_id
         response.status_code = status.HTTP_201_CREATED
-        return {'status': 'success', 'data': user_info}
+        return returnCreateUser(response.status_code, user_info)
 
     def query_user(self, user_id: str):
         users_db = self.client.users
         return users_db['users'].find_one({"email": user_id})
 
     @staticmethod
-    def login(user, data: model.UserLogin):
+    def login(user, data: model.UserLogin, manager: LoginManager, response: Response):
         if not user:
-            return {"status": 'no user'}
+            response.status_code = status.HTTP_401_UNAUTHORIZED
+            return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
+                               title="user not found",
+                               detail="email not registered")
         if verify_password(user['password'], data.password):
-            return {'status': 'Success'}
+            response.status_code = status.HTTP_200_OK
+            access_token = manager.create_access_token(data={'sub': data.username})
+            return returnLogin(statusCode=response.status_code, access_token=access_token)
         else:
-            return {'status': 'wrong pass'}
+            response.status_code = status.HTTP_401_UNAUTHORIZED
+            return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
+                               title="Wrong password",
+                               detail="Password did not match")
