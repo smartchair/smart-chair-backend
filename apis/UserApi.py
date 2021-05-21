@@ -51,15 +51,18 @@ class UserApi:
                                detail="Password did not match")
 
     def add_chair_user(self, user, chair_id, response: Response):
-        print(user)
-        user['chairsId'] = user['chairsId'].append(chair_id)
-        new = self.client.users['users'].replace_one({{"email": user['email']}}, user)
+        print('user ' + user)
         if not user:
             response.status_code = status.HTTP_401_UNAUTHORIZED
             return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
                                title="user not found",
                                detail="email not registered")
         else:
+            new_a = user
+            print('new_a ' + new_a)
+            new_a['chairsId'].append(chair_id)
+            print('new_a2 ' + new_a)
+            new = self.client.users['users'].replace_one({{"email": user['email']}}, new_a)
             response.status_code = status.HTTP_200_OK
             return returnChairAddition(statusCode=response.status_code, user_id=user['email'],
                                        chair_ids=new['chairsId'])
