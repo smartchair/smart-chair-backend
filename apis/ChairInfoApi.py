@@ -39,5 +39,6 @@ class ChairInfoApi:
             print("DOC " + str(day_doc.day))
             print("ARG " + str(day_arg.day))
             if day_doc.day == day_arg.day:
-                temps_array.append({day_doc.strftime("%H:%M:%S"), doc['temp']})
+                item = {"hour": day_doc.strftime("%H:%M:%S"), "temp": doc['temp']}
+                temps_array.append(item)
         return temps_array
