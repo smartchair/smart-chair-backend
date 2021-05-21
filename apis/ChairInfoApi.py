@@ -34,7 +34,7 @@ class ChairInfoApi:
     def getAllTempsDay(self, day: str, chair_id: str):
         temps_array = []
         for doc in self.db.find(filter={"chairId": chair_id}):
-            day_doc = datetime.strptime(doc['time'], '%d-%m-%y/%H:%M:%S')
+            day_doc = datetime.strptime(doc['time'], '%d-%m-%y %H:%M:%S')
             day_arg = datetime.strptime(day, "%d-%m-%y")
             print("DOC " + str(day_doc.day))
             print("ARG " + str(day_arg.day))
