@@ -6,6 +6,7 @@ from fastapi_login import LoginManager
 
 import model
 from apis import ChairInfoApi, UserApi
+from apis.QuestionsApi import QuestionApi
 
 application = FastAPI()
 
@@ -16,6 +17,7 @@ manager = LoginManager(SECRET, token_url='/users/login', use_cookie=True)
 
 chair_apis = ChairInfoApi(ClIENT)
 user_apis = UserApi(ClIENT)
+question_apis = QuestionApi(ClIENT)
 
 
 @application.get('/')
@@ -56,3 +58,23 @@ async def get_current_lum(chairId, user=Depends(manager)):
 @application.get('/chair/all/temp/{day}/{chairId}')
 async def get_temp_all_day(chairId, day, user=Depends(manager)):
     return chair_apis.getAllTempsDay(chair_id=chairId, day=day)
+
+
+@application.get('/chair/all/lum/{day}/{chairId}')
+async def get_lum_all_day(chairId, day, user=Depends(manager)):
+    return chair_apis.getAllLumsDay(chair_id=chairId, day=day)
+
+
+@application.post('/users/add-chair')
+async def add_user_chair(chair_id: str, user_id: str, response: Response, user=Depends(manager)):
+    return user_apis.add_chair_user(user=query_user(user_id), chair_id=chair_id, response=response)
+
+
+@application.get('/questions')
+async def get_question(user=Depends(manager)):
+    return question_apis.loadQuestion()
+
+
+@application.post('/questions/answer')
+async def post_answer(answer: model.Answer, user=Depends(manager)):
+    return question_apis.postAnswer(answer)

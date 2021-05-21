@@ -31,3 +31,52 @@ def returnLogin(statusCode: int, access_token: Any):
             "token": access_token
         }]
     }
+
+
+def returnChairInfo(statusCode: int, chair_info: model.chair_info):
+    return {
+        "data": [{
+            'status': statusCode,
+            'chairInfo': chair_info
+        }]
+    }
+
+
+def returnChairProperty(statusCode: int, propertyName: str, value: Any):
+    return {
+        "data": [{
+            "status": statusCode,
+            propertyName: value
+        }]
+    }
+
+
+def returnChairAddition(statusCode: int, user_id: str, chair_ids: []):
+    return {
+        'data': [{
+            "status": statusCode,
+            "email": user_id,
+            "chair_ids": chair_ids
+        }]
+    }
+
+
+def returnQuestion(statusCode: int, question: model.Question):
+    return {
+        'data': [{
+            'status': statusCode,
+            'question_id': question.id,
+            'question': question.question
+        }]
+    }
+
+
+def returnAnswer(statusCode: int, answer: model.Answer):
+    return {
+        'data': [{
+            'status': statusCode,
+            'question_id': answer.question_id,
+            'answer_id': answer.id,
+            'answer': answer.answer
+        }]
+    }

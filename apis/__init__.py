@@ -1,2 +1,3 @@
 from .ChairInfoApi import ChairInfoApi
-from .UserApis import UserApi
+from .UserApi import UserApi
+from .QuestionsApi import QuestionApi

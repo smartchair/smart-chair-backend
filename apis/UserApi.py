@@ -1,11 +1,10 @@
 from fastapi import Response
 from fastapi_login import LoginManager
-from fastapi_login.exceptions import InvalidCredentialsException
 from starlette import status
 
 import model
 from utils import generateHash, returnError
-from utils.jsonReturnUtils import returnCreateUser, returnLogin
+from utils.jsonReturnUtils import returnCreateUser, returnLogin, returnChairAddition
 from utils.passUtils import verify_password
 
 
@@ -50,3 +49,15 @@ class UserApi:
             return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
                                title="Wrong password",
                                detail="Password did not match")
+
+    @staticmethod
+    def add_chair_user(user, chair_id, response: Response):
+        if not user:
+            response.status_code = status.HTTP_401_UNAUTHORIZED
+            return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
+                               title="user not found",
+                               detail="email not registered")
+        else:
+            response.status_code = status.HTTP_200_OK
+            return returnChairAddition(statusCode=response.status_code, user_id=user['email'],
+                                       chair_ids=user['chairsId'].append(chair_id))
