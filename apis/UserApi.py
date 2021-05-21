@@ -58,7 +58,9 @@ class UserApi:
                                detail="email not registered")
         else:
             filter_user = {'email': user['email']}
+            print(user)
             new = user['chairsId'].append(chair_id)
+            print(new)
             new_value = {"$set": {'chairsId': new}}
             self.client.users['users'].update_one(filter_user, new_value)
             response.status_code = status.HTTP_200_OK
