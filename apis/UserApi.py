@@ -59,7 +59,9 @@ class UserApi:
         else:
             filter_user = {'email': user['email']}
             print(user)
-            new = user['chairsId'].append(chair_id)
+            new = user['chairsId']
+            print(new)
+            new.append(chair_id)
             print(new)
             new_value = {"$set": {'chairsId': new}}
             self.client.users['users'].update_one(filter_user, new_value)
