@@ -25,6 +25,5 @@ class ChairInfoApi:
         chair = self.client.find_one({"chairId": chair_id})
         print(chair)
         return {
-            "chairId": chair.chairId,
             "currentLum": chair.lum
         }
