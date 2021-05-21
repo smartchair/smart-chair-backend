@@ -57,11 +57,10 @@ class UserApi:
                                title="user not found",
                                detail="email not registered")
         else:
-            user_db = self.client.users
+            filter_user = {'email': user['email']}
             new = user['chairsId'].append(chair_id)
-            print(new)
-            user_db['users'].replace_one({'email': user['email']}, {'chairsId': new})
-            new_user = self.query_user(user_id=user['email'])
+            new_value = {"$set": {'chairsId': new}}
+            self.client.users['users'].update_one(filter_user, new_value)
             response.status_code = status.HTTP_200_OK
             return returnChairAddition(statusCode=response.status_code, user_id=user['email'],
-                                       chair_ids=new_user['chairsId'])
+                                       chair_ids=new)
