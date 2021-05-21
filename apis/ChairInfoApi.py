@@ -15,9 +15,10 @@ class ChairInfoApi:
         return {'chairinfo': chair_info}
 
     def getCurrentTemp(self, chair_id: str):
+        print(chair_id)
         chair = self.client.find_one({"chairId": chair_id})
+        print(chair)
         return {
-            "chairId": chair.chairId,
             "currentTemp": chair.temp
         }
 
