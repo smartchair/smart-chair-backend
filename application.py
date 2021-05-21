@@ -53,6 +53,6 @@ async def get_current_lum(chairId, user=Depends(manager)):
     return chair_apis.getCurrentLum(chairId)
 
 
-@application.get('/chair/all/temp/{day}/chairId')
+@application.get('/chair/all/temp/{day}/{chairId}')
 async def get_temp_all_day(chairId, day, user=Depends(manager)):
     return chair_apis.getAllTempsDay(chairId, day)
