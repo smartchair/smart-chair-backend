@@ -18,6 +18,7 @@ class ChairInfoApi:
         print(chair_id)
         chair = self.client.find_one({"chairId": chair_id})
         print(chair)
+        print(chair['temp'])
         return {
             "currentTemp": chair.temp
         }
