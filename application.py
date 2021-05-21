@@ -12,7 +12,7 @@ application = FastAPI()
 ClIENT = pymongo.MongoClient(os.environ.get('MONGOURL'))
 SECRET = os.environ.get('SECRET_KEY')
 
-manager = LoginManager(SECRET, token_url='/users/login')
+manager = LoginManager(SECRET, token_url='/users/login',use_cookie=True)
 
 chair_apis = ChairInfoApi(ClIENT)
 user_apis = UserApi(ClIENT)
@@ -44,10 +44,10 @@ async def login(data: model.UserLogin, response: Response):
 
 
 @application.get('/chair/current/temp/{chairId}')
-async def get_current_temp(chairId,user=Depends(manager)):
+async def get_current_temp(chairId):
     return chair_apis.getCurrentTemp(chairId)
 
 
 @application.get('/chair/current/lum/{chairId}')
-async def get_current_lum(chairId,user=Depends(manager)):
+async def get_current_lum(chairId):
     return chair_apis.getCurrentLum(chairId)
