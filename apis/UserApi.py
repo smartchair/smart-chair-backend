@@ -51,6 +51,7 @@ class UserApi:
                                detail="Password did not match")
 
     def add_chair_user(self, user, chair_id, response: Response):
+        print(user)
         user['chairsId'] = user['chairsId'].append(chair_id)
         new = self.client.users['users'].replace_one({{"email": user.email}}, user)
         if not user:
