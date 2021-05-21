@@ -57,12 +57,10 @@ class UserApi:
                                title="user not found",
                                detail="email not registered")
         else:
-            new_a = model.UserInfo()
-            new_a.id = user['id']
-            new_a.chairsId = user['chairsId'].append(chair_id)
-            new_a.password = user['password']
-            new_a.email = str(user['email'])
-            new = self.client.users['users'].replace_one({{"email": user['email']}}, new_a)
+            user_db = self.client.users
+            new = user_db['chairsId'].append(chair_id)
+            print(new)
+            user_db['users'].replace_one({'email': user['email']}, {'chairsId': new})
             response.status_code = status.HTTP_200_OK
             return returnChairAddition(statusCode=response.status_code, user_id=user['email'],
                                        chair_ids=new['chairsId'])
