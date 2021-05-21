@@ -58,7 +58,7 @@ class UserApi:
                                detail="email not registered")
         else:
             user_db = self.client.users
-            new = user_db['chairsId'].append(chair_id)
+            new = user['chairsId'].append(chair_id)
             print(new)
             user_db['users'].replace_one({'email': user['email']}, {'chairsId': new})
             response.status_code = status.HTTP_200_OK
