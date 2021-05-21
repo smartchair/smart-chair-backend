@@ -36,6 +36,8 @@ class ChairInfoApi:
         for doc in self.db.find(filter={"chairId": chair_id}):
             day_doc = datetime.strptime(doc['time'], '%d-%m-%y/%H:%M:%S')
             day_arg = datetime.strptime(day, "%d-%m-%y")
+            print("DOC " + str(day_doc.day))
+            print("ARG " + str(day_arg.day))
             if day_doc.day == day_arg.day:
                 temps_array.append({day_doc.hour, doc['temp']})
         return temps_array
