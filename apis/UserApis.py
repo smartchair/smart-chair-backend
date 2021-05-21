@@ -31,9 +31,12 @@ class UserApi:
 
     @staticmethod
     def login(user, data: model.UserLogin):
-        password = data.password
+        print("USER " + user)
+        print("USER PASS" + user['password'])
+        print("LOGIN PASS" + data.password)
         if not user:
             return {"status": 'no user'}
-        if not verify_password(user['password'], password):
-            return {'status': 'wrong_pass'}
-        return {'status': 'Success'}
+        if verify_password(user['password'], data.password):
+            return {'status': 'Success'}
+        else:
+            return {'status': 'wrong pass'}
