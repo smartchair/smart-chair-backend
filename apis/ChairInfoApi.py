@@ -21,8 +21,9 @@ class ChairInfoApi:
             "currentTemp": chair.temp
         }
 
-    def getCurrentLum(self,chair_id:str):
+    def getCurrentLum(self, chair_id: str):
         chair = self.client.find_one({"chairId": chair_id})
+        print(chair)
         return {
             "chairId": chair.chairId,
             "currentLum": chair.lum
