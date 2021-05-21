@@ -61,6 +61,7 @@ class UserApi:
             new = user['chairsId'].append(chair_id)
             print(new)
             user_db['users'].replace_one({'email': user['email']}, {'chairsId': new})
+            new_user = self.query_user(user_id=user['email'])
             response.status_code = status.HTTP_200_OK
             return returnChairAddition(statusCode=response.status_code, user_id=user['email'],
-                                       chair_ids=new['chairsId'])
+                                       chair_ids=new_user['chairsId'])
