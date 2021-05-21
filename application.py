@@ -41,3 +41,13 @@ def query_user(user_id: str):
 @application.post('/users/login')
 async def login(data: model.UserLogin, response: Response):
     return user_apis.login(query_user(data.username), data, manager, response)
+
+
+@application.get('/chair/current/temp/{chairId}')
+async def get_current_temp(chairId):
+    return chair_apis.getCurrentTemp(chairId)
+
+
+@application.get('/chair/current/lum/{chairId}')
+async def get_current_lum(chairId):
+    return chair_apis.getCurrentTemp(chairId)
