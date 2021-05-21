@@ -61,7 +61,7 @@ class UserApi:
             new_a.id = user['id']
             new_a.chairsId = user['chairsId'].append(chair_id)
             new_a.password = user['password']
-            new_a.email = user['email']
+            new_a.email = str(user['email'])
             new = self.client.users['users'].replace_one({{"email": user['email']}}, new_a)
             response.status_code = status.HTTP_200_OK
             return returnChairAddition(statusCode=response.status_code, user_id=user['email'],
