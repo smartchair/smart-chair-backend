@@ -50,4 +50,4 @@ async def get_current_temp(chairId):
 
 @application.get('/chair/current/lum/{chairId}')
 async def get_current_lum(chairId):
-    return chair_apis.getCurrentTemp(chairId)
+    return chair_apis.getCurrentLum(chairId)
