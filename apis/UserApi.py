@@ -50,8 +50,9 @@ class UserApi:
                                title="Wrong password",
                                detail="Password did not match")
 
-    @staticmethod
-    def add_chair_user(user, chair_id, response: Response):
+    def add_chair_user(self, user, chair_id, response: Response):
+        user['chairsId'] = user['chairsId'].append(chair_id)
+        new = self.client.users['users'].replace_one({{"email": user.email}}, user)
         if not user:
             response.status_code = status.HTTP_401_UNAUTHORIZED
             return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
@@ -60,4 +61,4 @@ class UserApi:
         else:
             response.status_code = status.HTTP_200_OK
             return returnChairAddition(statusCode=response.status_code, user_id=user['email'],
-                                       chair_ids=user['chairsId'].append(chair_id))
+                                       chair_ids=new['chairsId'])
