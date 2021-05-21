@@ -13,6 +13,7 @@ class ChairInfo(BaseModel):
     presence: bool
     noise: float
     lum: float
+    time: str
 
     class Config:
         arbitrary_types_allowed = True
