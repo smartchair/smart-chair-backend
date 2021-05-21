@@ -20,11 +20,7 @@ def verify_password(stored_password, provided_password):
                                   salt,
                                   100000)
     pwdhash = binascii.hexlify(pwdhash)
-    print("pwdhash " + str(pwdhash))
-    print("KEY " + str(key))
     if pwdhash == key:
-        print("verify TRUE")
         return True
     else:
-        print("verify FALSE")
         return False
