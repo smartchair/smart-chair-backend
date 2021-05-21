@@ -28,3 +28,14 @@ class UserLogin(BaseModel):
         json_encoders = {
             ObjectId: str
         }
+
+
+class AddChairUser(BaseModel):
+    chairId: str
+    userId: str
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {
+            ObjectId: str
+        }
