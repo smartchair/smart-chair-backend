@@ -1,7 +1,7 @@
 import os
 
 import pymongo as pymongo
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response, Depends
 from fastapi_login import LoginManager
 
 import model
@@ -44,10 +44,10 @@ async def login(data: model.UserLogin, response: Response):
 
 
 @application.get('/chair/current/temp/{chairId}')
-async def get_current_temp(chairId):
+async def get_current_temp(chairId,user=Depends(manager)):
     return chair_apis.getCurrentTemp(chairId)
 
 
 @application.get('/chair/current/lum/{chairId}')
-async def get_current_lum(chairId):
+async def get_current_lum(chairId,user=Depends(manager)):
     return chair_apis.getCurrentLum(chairId)
