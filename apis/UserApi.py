@@ -15,15 +15,15 @@ class UserApi:
     def create_user(self, user_info: model.UserInfo, response: Response):
         if hasattr(user_info, 'id'):
             delattr(user_info, 'id')
-        users_db = self.client.users
-        is_present = users_db['users'].find_one({"email": user_info.email})
+        users_db = self.client.users['users']
+        is_present = users_db.find_one({"email": user_info.email})
         if is_present is not None:
             response.status_code = status.HTTP_204_NO_CONTENT
             return returnError(statusCode=status.HTTP_204_NO_CONTENT,
                                title="user already registered",
                                detail="email already taken")
         user_info.password = generateHash(user_info.password)
-        new = users_db['users'].insert_one(user_info.dict(by_alias=True))
+        new = users_db.insert_one(user_info.dict(by_alias=True))
         user_info.id = new.inserted_id
         response.status_code = status.HTTP_201_CREATED
         return returnCreateUser(response.status_code, user_info)
