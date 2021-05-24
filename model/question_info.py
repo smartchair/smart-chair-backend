@@ -18,6 +18,7 @@ class Question(BaseModel):
 
 
 class Answer(BaseModel):
+    id: Optional[PyObjectId] = Field(alias='_id')
     question_id: str
     answer: str
     user_id: str
