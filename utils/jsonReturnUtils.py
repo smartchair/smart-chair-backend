@@ -65,7 +65,7 @@ def returnQuestion(statusCode: int, question):
     return {
         'data': [{
             'status': statusCode,
-            'question_id': question['id'],
+            'question_id': question['_id'],
             'question': question['question']
         }]
     }
