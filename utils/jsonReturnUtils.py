@@ -61,12 +61,12 @@ def returnChairAddition(statusCode: int, user_id: str, chair_ids: []):
     }
 
 
-def returnQuestion(statusCode: int, question: model.Question):
+def returnQuestion(statusCode: int, question):
     return {
         'data': [{
             'status': statusCode,
-            'question_id': question.id,
-            'question': question.question
+            'question_id': question['id'],
+            'question': question['question']
         }]
     }
 
