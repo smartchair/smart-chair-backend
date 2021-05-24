@@ -18,7 +18,7 @@ class Question(BaseModel):
 
 
 class Answer(BaseModel):
-    question_id: Any
+    question_id: str
     answer: str
     user_id: str
 
