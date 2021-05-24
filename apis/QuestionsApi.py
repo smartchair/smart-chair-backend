@@ -14,6 +14,7 @@ class QuestionApi:
         questions_db = self.client.questions['questions']
         number = questions_db.count_documents({})
         questions = questions_db.find()
+        print(questions)
         return returnQuestion(question=questions[random.randint(0, number)], statusCode=status.HTTP_200_OK)
 
     def addQuestion(self, question: model.Question):
