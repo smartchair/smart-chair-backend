@@ -71,12 +71,12 @@ def returnQuestion(statusCode: int, question):
     }
 
 
-def returnAnswer(statusCode: int, answer: model.Answer):
+def returnAnswer(statusCode: int, answer):
     return {
         'data': [{
             'status': statusCode,
-            'question_id': answer.question_id,
-            'answer_id': answer.id,
-            'answer': answer.answer
+            'question_id': answer['question_id'],
+            'answer_id': answer['id'],
+            'answer': answer["answer"]
         }]
     }
