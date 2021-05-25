@@ -24,5 +24,6 @@ class QuestionApi:
 
     def postAnswer(self, answer: model.Answer):
         answer_db = self.client.questions['answers']
-        answer_db.insert_one(answer.dict(by_alias=True))
+        new = answer_db.insert_one(answer.dict(by_alias=True))
+        answer.id = new.inserted_id
         return returnAnswer(statusCode=status.HTTP_200_OK, answer=answer)
