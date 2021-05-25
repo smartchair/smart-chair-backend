@@ -77,5 +77,5 @@ async def get_question(user=Depends(manager)):
 
 
 @application.post('/questions/answer')
-async def post_answer(answer: model.Answer, user=Depends(manager)):
+async def post_answer(answer: model.AnswerIn, user=Depends(manager)):
     return question_apis.postAnswer(answer)
