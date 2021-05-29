@@ -4,7 +4,7 @@ from starlette import status
 
 import model
 from utils import generateHash, returnError
-from utils.jsonReturnUtils import returnCreateUser, returnLogin, returnChairAddition
+from utils.jsonReturnUtils import returnCreateUser, returnLogin, returnChairAddition, returnChairIds
 from utils.passUtils import verify_password
 
 
@@ -65,3 +65,9 @@ class UserApi:
             response.status_code = status.HTTP_200_OK
             return returnChairAddition(statusCode=response.status_code, user_id=user['email'],
                                        chair_ids=new)
+
+    def get_all_chairs(self, user_id, response: Response):
+        users_db = self.client.users['users']
+        is_present = users_db.find_one({"email": user_id})
+        response.status_code = status.HTTP_200_OK
+        return returnChairIds(statusCode=response.status_code, array=is_present['chairsId'])

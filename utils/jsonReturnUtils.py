@@ -79,3 +79,12 @@ def returnAnswer(statusCode: int, answer):
             'answer': answer.answer
         }]
     }
+
+
+def returnChairIds(statusCode: int, array: []):
+    return {
+        'data': [{
+            'status': statusCode,
+            'chairIds': array
+        }]
+    }

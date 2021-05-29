@@ -79,3 +79,8 @@ async def get_question(user=Depends(manager)):
 @application.post('/questions/answer')
 async def post_answer(answer: model.AnswerIn, user=Depends(manager)):
     return question_apis.postAnswer(answer)
+
+
+@application.get('/users/{userId}/get-chairs')
+async def get_chairs(userId, response: Response, user=Depends(manager)):
+    return user_apis.get_all_chairs(userId, response)
