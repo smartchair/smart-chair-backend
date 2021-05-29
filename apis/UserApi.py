@@ -20,8 +20,8 @@ class UserApi:
         if is_present is not None:
             response.status_code = status.HTTP_204_NO_CONTENT
             return returnError(statusCode=status.HTTP_204_NO_CONTENT,
-                               title="user already registered",
-                               detail="email already taken")
+                               title="Usuário já registrado",
+                               detail="Email já utilizado")
         user_info.password = generateHash(user_info.password)
         new = users_db.insert_one(user_info.dict(by_alias=True))
         user_info.id = new.inserted_id
@@ -37,8 +37,8 @@ class UserApi:
         if not user:
             response.status_code = status.HTTP_401_UNAUTHORIZED
             return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
-                               title="user not found",
-                               detail="email not registered")
+                               title="Usuário não encontrado",
+                               detail="Email não registrado")
         if verify_password(user['password'], data.password):
             response.status_code = status.HTTP_200_OK
             access_token = manager.create_access_token(data={'sub': data.username})
@@ -47,15 +47,15 @@ class UserApi:
         else:
             response.status_code = status.HTTP_401_UNAUTHORIZED
             return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
-                               title="Wrong password",
-                               detail="Password did not match")
+                               title="Senha incorreta",
+                               detail="A senha não está correta")
 
     def add_chair_user(self, user, chair_id, response: Response):
         if not user:
             response.status_code = status.HTTP_401_UNAUTHORIZED
             return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
-                               title="user not found",
-                               detail="email not registered")
+                               title="Usuário não encontrado",
+                               detail="Email não registrado")
         else:
             filter_user = {'email': user['email']}
             new = user['chairsId']
