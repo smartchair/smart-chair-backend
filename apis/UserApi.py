@@ -18,10 +18,10 @@ class UserApi:
         users_db = self.client.users['users']
         is_present = users_db.find_one({"email": user_info.email})
         if is_present is not None:
-            response.status_code = status.HTTP_204_NO_CONTENT
+            response.status_code = status.HTTP_200_OK
             #return returnError(statusCode=status.HTTP_204_NO_CONTENT,
-             #                  title="Usuário já registrado",
-              #                 detail="Email já utilizado")
+            #                  title="Usuário já registrado",
+            #                 detail="Email já utilizado")
             return {"test": "test"}
         user_info.password = generateHash(user_info.password)
         new = users_db.insert_one(user_info.dict(by_alias=True))
