@@ -4,7 +4,7 @@ from starlette import status
 
 import model
 from utils import generateHash, returnError
-from utils.jsonReturnUtils import returnCreateUser, returnLogin, returnChairAddition
+from utils.jsonReturnUtils import returnCreateUser, returnLogin, returnChairAddition, returnChairIds
 from utils.passUtils import verify_password
 
 
@@ -18,10 +18,10 @@ class UserApi:
         users_db = self.client.users['users']
         is_present = users_db.find_one({"email": user_info.email})
         if is_present is not None:
-            response.status_code = status.HTTP_204_NO_CONTENT
-            return returnError(statusCode=status.HTTP_204_NO_CONTENT,
-                               title="user already registered",
-                               detail="email already taken")
+            response.status_code = status.HTTP_200_OK
+            return returnError(statusCode=status.HTTP_200_OK,
+                              title="Usuário já registrado",
+                             detail="Email já utilizado")
         user_info.password = generateHash(user_info.password)
         new = users_db.insert_one(user_info.dict(by_alias=True))
         user_info.id = new.inserted_id
@@ -37,8 +37,8 @@ class UserApi:
         if not user:
             response.status_code = status.HTTP_401_UNAUTHORIZED
             return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
-                               title="user not found",
-                               detail="email not registered")
+                               title="Usuário não encontrado",
+                               detail="Email não registrado")
         if verify_password(user['password'], data.password):
             response.status_code = status.HTTP_200_OK
             access_token = manager.create_access_token(data={'sub': data.username})
@@ -47,15 +47,15 @@ class UserApi:
         else:
             response.status_code = status.HTTP_401_UNAUTHORIZED
             return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
-                               title="Wrong password",
-                               detail="Password did not match")
+                               title="Senha incorreta",
+                               detail="A senha não está correta")
 
     def add_chair_user(self, user, chair_id, response: Response):
         if not user:
             response.status_code = status.HTTP_401_UNAUTHORIZED
             return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
-                               title="user not found",
-                               detail="email not registered")
+                               title="Usuário não encontrado",
+                               detail="Email não registrado")
         else:
             filter_user = {'email': user['email']}
             new = user['chairsId']
@@ -65,3 +65,9 @@ class UserApi:
             response.status_code = status.HTTP_200_OK
             return returnChairAddition(statusCode=response.status_code, user_id=user['email'],
                                        chair_ids=new)
+
+    def get_all_chairs(self, user_id, response: Response):
+        users_db = self.client.users['users']
+        is_present = users_db.find_one({"email": user_id})
+        response.status_code = status.HTTP_200_OK
+        return returnChairIds(statusCode=response.status_code, array=is_present['chairsId'])
