@@ -19,7 +19,7 @@ class UserApi:
         is_present = users_db.find_one({"email": user_info.email})
         if is_present is not None:
             response.status_code = status.HTTP_200_OK
-            return returnError(statusCode=status.HTTP_204_NO_CONTENT,
+            return returnError(statusCode=status.HTTP_200_OK,
                               title="Usuário já registrado",
                              detail="Email já utilizado")
         user_info.password = generateHash(user_info.password)
