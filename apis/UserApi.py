@@ -3,7 +3,6 @@ from fastapi_login import LoginManager
 from starlette import status
 
 import model
-from model.user_info import ChairModel
 from utils import generateHash, returnError
 from utils.jsonReturnUtils import returnCreateUser, returnLogin, returnChairAddition, returnChairIds
 from utils.passUtils import verify_password
