@@ -20,8 +20,8 @@ class UserApi:
         if is_present is not None:
             response.status_code = status.HTTP_200_OK
             return returnError(statusCode=status.HTTP_200_OK,
-                              title="Usuário já registrado",
-                             detail="Email já utilizado")
+                               title="Usuário já registrado",
+                               detail="Email já utilizado")
         user_info.password = generateHash(user_info.password)
         new = users_db.insert_one(user_info.dict(by_alias=True))
         user_info.id = new.inserted_id
@@ -50,7 +50,7 @@ class UserApi:
                                title="Senha incorreta",
                                detail="A senha não está correta")
 
-    def add_chair_user(self, user, chair_id, response: Response):
+    def add_chair_user(self, user, chair: model.AddChairModel, response: Response):
         if not user:
             response.status_code = status.HTTP_401_UNAUTHORIZED
             return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
@@ -58,9 +58,9 @@ class UserApi:
                                detail="Email não registrado")
         else:
             filter_user = {'email': user['email']}
-            new = user['chairsId']
-            new.append(chair_id)
-            new_value = {"$set": {'chairsId': new}}
+            new = user['chairs']
+            new.append(chair)
+            new_value = {"$set": {'chairs': new}}
             self.client.users['users'].update_one(filter_user, new_value)
             response.status_code = status.HTTP_200_OK
             return returnChairAddition(statusCode=response.status_code, user_id=user['email'],
@@ -70,4 +70,4 @@ class UserApi:
         users_db = self.client.users['users']
         is_present = users_db.find_one({"email": user_id})
         response.status_code = status.HTTP_200_OK
-        return returnChairIds(statusCode=response.status_code, array=is_present['chairsId'])
+        return returnChairIds(statusCode=response.status_code, array=is_present['chairs'])
