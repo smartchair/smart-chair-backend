@@ -30,3 +30,13 @@ class UserLogin(BaseModel):
         }
 
 
+class ChairIn(BaseModel):
+    chairId: str
+    chairNickname: str
+    userId: str
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {
+            ObjectId: str
+        }
