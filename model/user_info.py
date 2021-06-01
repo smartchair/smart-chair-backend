@@ -10,7 +10,7 @@ class UserInfo(BaseModel):
     id: Optional[PyObjectId] = Field(alias='_id')
     email: str
     password: Any
-    chairs: Any
+    chairs: []
 
     class Config:
         arbitrary_types_allowed = True
