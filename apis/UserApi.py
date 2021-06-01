@@ -50,7 +50,7 @@ class UserApi:
                                title="Senha incorreta",
                                detail="A senha não está correta")
 
-    def add_chair_user(self, user, chair: model.AddChairModel, response: Response):
+    def add_chair_user(self, user, chair, response: Response):
         if not user:
             response.status_code = status.HTTP_401_UNAUTHORIZED
             return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
