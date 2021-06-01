@@ -85,6 +85,6 @@ def returnChairIds(statusCode: int, array: []):
     return {
         'data': [{
             'status': statusCode,
-            'chairIds': array
+            'chairs': array
         }]
     }
