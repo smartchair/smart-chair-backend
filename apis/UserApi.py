@@ -65,7 +65,7 @@ class UserApi:
                     u['chairNickname'] = chair.chairNickname
                 temp_array.append(u['chairId'])
             if chair.chairId not in temp_array:
-                new.append(chair)
+                new.append(dict(chair))
             new_value = {"$set": {'chairs': new}}
             self.client.users['users'].update_one(filter_user, new_value)
             response.status_code = status.HTTP_200_OK
