@@ -81,10 +81,11 @@ def returnAnswer(statusCode: int, answer):
     }
 
 
-def returnChairIds(statusCode: int, array: []):
+def returnChairIds(statusCode: int, array: [],userId:str):
     return {
         'data': [{
             'status': statusCode,
+            "userId": userId,
             'chairs': array
         }]
     }
