@@ -55,7 +55,7 @@ def returnChairAddition(statusCode: int, user_id: str, chair_ids: []):
     return {
         'data': [{
             "status": statusCode,
-            "email": user_id,
+            "userId": user_id,
             "chair_ids": chair_ids
         }]
     }

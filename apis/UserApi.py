@@ -3,6 +3,7 @@ from fastapi_login import LoginManager
 from starlette import status
 
 import model
+from model.user_info import ChairModel
 from utils import generateHash, returnError
 from utils.jsonReturnUtils import returnCreateUser, returnLogin, returnChairAddition, returnChairIds
 from utils.passUtils import verify_password
@@ -59,7 +60,7 @@ class UserApi:
         else:
             filter_user = {'email': user['email']}
             new = user['chairs']
-            new.append(dict(chair))
+            new.append(dict(ChairModel(chair)))
             new_value = {"$set": {'chairs': new}}
             self.client.users['users'].update_one(filter_user, new_value)
             response.status_code = status.HTTP_200_OK

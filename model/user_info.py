@@ -40,3 +40,18 @@ class ChairIn(BaseModel):
         json_encoders = {
             ObjectId: str
         }
+
+
+class ChairModel(BaseModel):
+    chairId: str
+    chairNickname: str
+
+    def __init__(self, Chair_in: ChairIn):
+        self.chairId = Chair_in.chairId
+        self.chairNickname = Chair_in.chairNickname
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {
+            ObjectId: str
+        }
