@@ -63,8 +63,8 @@ class UserApi:
                 print(u)
                 print(chair)
                 print(chair.chairId)
-                if u.chairId == chair.chairId:
-                    u.chairNickname = chair.chairNickname
+                if u['chairId'] == chair.chairId:
+                    u['chairNickname'] = chair.chairNickname
             new_value = {"$set": {'chairs': new}}
             self.client.users['users'].update_one(filter_user, new_value)
             response.status_code = status.HTTP_200_OK
