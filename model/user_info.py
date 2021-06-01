@@ -46,7 +46,7 @@ class ChairModel(BaseModel):
     chairId: str
     chairNickname: str
 
-    def __init__(self, Chair_in: ChairIn):
+    def create(self, Chair_in: ChairIn):
         self.chairId = Chair_in.chairId
         self.chairNickname = Chair_in.chairNickname
 
