@@ -59,12 +59,11 @@ class UserApi:
         else:
             filter_user = {'email': user['email']}
             new = user['chairs']
-            if chair not in new:
-                new.append(dict(chair))
-            else:
-                for u in new:
-                    if u.chairId == chair.chairId:
-                        u.chairNickname = chair.chairNickname
+            for u in new:
+                print(u)
+                print(chair)
+                if u.chairId == chair.chairId:
+                    u.chairNickname = chair.chairNickname
             new_value = {"$set": {'chairs': new}}
             self.client.users['users'].update_one(filter_user, new_value)
             response.status_code = status.HTTP_200_OK
@@ -75,4 +74,4 @@ class UserApi:
         users_db = self.client.users['users']
         is_present = users_db.find_one({"email": user_id})
         response.status_code = status.HTTP_200_OK
-        return returnChairIds(statusCode=response.status_code, array=is_present['chairs'],userId=user_id)
+        return returnChairIds(statusCode=response.status_code, array=is_present['chairs'], userId=user_id)
