@@ -59,8 +59,7 @@ class UserApi:
         else:
             filter_user = {'email': user['email']}
             new = user['chairs']
-            chair_db = ChairModel().create(chair)
-            new.append(dict(chair_db))
+            new.append(dict(chair))
             new_value = {"$set": {'chairs': new}}
             self.client.users['users'].update_one(filter_user, new_value)
             response.status_code = status.HTTP_200_OK
