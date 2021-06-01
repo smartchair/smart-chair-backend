@@ -59,12 +59,13 @@ class UserApi:
         else:
             filter_user = {'email': user['email']}
             new = user['chairs']
+            temp_array = []
             for u in new:
-                print(u)
-                print(chair)
-                print(chair.chairId)
                 if u['chairId'] == chair.chairId:
                     u['chairNickname'] = chair.chairNickname
+                temp_array.append(u['chairId'])
+            if chair.chairId not in temp_array:
+                new.append(chair)
             new_value = {"$set": {'chairs': new}}
             self.client.users['users'].update_one(filter_user, new_value)
             response.status_code = status.HTTP_200_OK
