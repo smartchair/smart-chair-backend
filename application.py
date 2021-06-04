@@ -65,10 +65,9 @@ async def get_lum_all_day(chairId, day, user=Depends(manager)):
     return chair_apis.getAllLumsDay(chair_id=chairId, day=day)
 
 
-@application.post('/users/add-chair')
-async def add_user_chair(chairUser: model.AddChairUser, response: Response, user=Depends(manager)):
-    return user_apis.add_chair_user(user=query_user(chairUser.userId), chair_id=chairUser.chairId,
-                                    response=response)
+@application.post('/users/{userId}/add-chair')
+async def add_user_chair(userId, chairUser: model.ChairIn, response: Response, user=Depends(manager)):
+    return user_apis.add_chair_user(user=query_user(userId), response=response, chair=chairUser)
 
 
 @application.get('/questions')

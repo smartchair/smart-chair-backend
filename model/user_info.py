@@ -10,7 +10,7 @@ class UserInfo(BaseModel):
     id: Optional[PyObjectId] = Field(alias='_id')
     email: str
     password: Any
-    chairsId: Any
+    chairs: dict
 
     class Config:
         arbitrary_types_allowed = True
@@ -30,9 +30,9 @@ class UserLogin(BaseModel):
         }
 
 
-class AddChairUser(BaseModel):
+class ChairIn(BaseModel):
     chairId: str
-    userId: str
+    chairNickname: str
 
     class Config:
         arbitrary_types_allowed = True

@@ -14,6 +14,7 @@ class QuestionApi:
         questions_db = self.client.questions['questions']
         number = questions_db.count_documents({})
         questions = questions_db.find()
+        # TODO: Interface para separar o question loader
         question = questions[random.randint(0, number)]
         return returnQuestion(question=question, statusCode=status.HTTP_200_OK)
 
@@ -24,5 +25,5 @@ class QuestionApi:
 
     def postAnswer(self, answer: model.AnswerIn):
         answer_db = self.client.questions['answers']
-        new = answer_db.insert_one(answer.dict(by_alias=True))
+        answer_db.insert_one(answer.dict(by_alias=True))
         return returnAnswer(statusCode=status.HTTP_200_OK, answer=answer)
