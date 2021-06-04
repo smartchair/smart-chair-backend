@@ -57,16 +57,10 @@ class UserApi:
                                title="Usuário não encontrado",
                                detail="Email não registrado")
         else:
-            filter_user = {'email': user['email']}
             new = user['chairs']
-            temp_array = []
-            for u in new:
-                if u['chairId'] == chair.chairId:
-                    u['chairNickname'] = chair.chairNickname
-                temp_array.append(u['chairId'])
-            if chair.chairId not in temp_array:
-                new.append(dict(chair))
+            new[chair.chairId] = chair.chairNickname
             new_value = {"$set": {'chairs': new}}
+            filter_user = {'email': user['email']}
             self.client.users['users'].update_one(filter_user, new_value)
             response.status_code = status.HTTP_200_OK
             return returnChairAddition(statusCode=response.status_code, user_id=user['email'],
