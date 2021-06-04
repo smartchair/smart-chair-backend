@@ -1,4 +1,4 @@
-from typing import Optional, Any, List
+from typing import Optional, Any
 
 from bson import ObjectId
 from pydantic import BaseModel, Field
@@ -10,7 +10,7 @@ class UserInfo(BaseModel):
     id: Optional[PyObjectId] = Field(alias='_id')
     email: str
     password: Any
-    chairs: List
+    chairs: dict
 
     class Config:
         arbitrary_types_allowed = True
