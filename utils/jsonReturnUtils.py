@@ -56,7 +56,17 @@ def returnChairAddition(statusCode: int, user_id: str, chair_ids: []):
         'data': [{
             "status": statusCode,
             "userId": user_id,
-            "chair_ids": chair_ids
+            "chairs": chair_ids
+        }]
+    }
+
+
+def returnChairDeletion(statusCode: int, user_id: str, chair_ids: []):
+    return {
+        'data': [{
+            "status": statusCode,
+            "userId": user_id,
+            "chairs": chair_ids
         }]
     }
 
@@ -81,7 +91,7 @@ def returnAnswer(statusCode: int, answer):
     }
 
 
-def returnChairIds(statusCode: int, array: [],userId:str):
+def returnChairIds(statusCode: int, array: [], userId: str):
     return {
         'data': [{
             'status': statusCode,
