@@ -7,6 +7,7 @@ from fastapi_login import LoginManager
 import model
 from apis import ChairInfoApi, UserApi
 from apis.QuestionsApi import QuestionApi
+from model.chair_info import GetPropModel
 
 application = FastAPI()
 
@@ -45,29 +46,29 @@ async def login(data: model.UserLogin, response: Response):
     return user_apis.login(query_user(data.username), data, manager, response)
 
 
-@application.get('/chair/current/temp/{chairId}')
-async def get_current_temp(chairId, user=Depends(manager)):
-    return chair_apis.getCurrentTemp(chairId)
+@application.get('/chair/current/{prop}/{chairId}')
+async def get_current_prop(prop, chairId, user=Depends(manager)):
+    return chair_apis.getCurrentProp(chair_id=chairId, prop=prop)
 
 
-@application.get('/chair/current/lum/{chairId}')
-async def get_current_lum(chairId, user=Depends(manager)):
-    return chair_apis.getCurrentLum(chairId)
+@application.get('/chair/day/{prop}')
+async def get_prop_all_day(prop: str, getTempModel: GetPropModel, user=Depends(manager)):
+    return chair_apis.getAllPropDay(day=getTempModel.day, chair_id=getTempModel.chairId, prop=prop)
 
 
-@application.get('/chair/all/temp/{day}/{chairId}')
-async def get_temp_all_day(chairId, day, user=Depends(manager)):
-    return chair_apis.getAllTempsDay(chair_id=chairId, day=day)
-
-
-@application.get('/chair/all/lum/{day}/{chairId}')
-async def get_lum_all_day(chairId, day, user=Depends(manager)):
-    return chair_apis.getAllLumsDay(chair_id=chairId, day=day)
+@application.get('/chair/all/{prop}/{chairId}')
+async def get_prop_all(prop: str, chairId: str):
+    return chair_apis.getAllProp(chairId, prop=prop)
 
 
 @application.post('/users/{userId}/add-chair')
 async def add_user_chair(userId, chairUser: model.ChairIn, response: Response, user=Depends(manager)):
     return user_apis.add_chair_user(user=query_user(userId), response=response, chair=chairUser)
+
+
+@application.post('/users/{userId}/remove-chair')
+async def remove_user_chair(userId, chairUser: model.ChairIn, response: Response, user=Depends(manager)):
+    return user_apis.remove_chair_user(user=query_user(userId), response=response, chair=chairUser)
 
 
 @application.get('/questions')

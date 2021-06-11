@@ -4,7 +4,8 @@ from starlette import status
 
 import model
 from utils import generateHash, returnError
-from utils.jsonReturnUtils import returnCreateUser, returnLogin, returnChairAddition, returnChairIds
+from utils.jsonReturnUtils import returnCreateUser, returnLogin, returnChairAddition, returnChairIds, \
+    returnChairDeletion
 from utils.passUtils import verify_password
 
 
@@ -71,3 +72,19 @@ class UserApi:
         is_present = users_db.find_one({"email": user_id})
         response.status_code = status.HTTP_200_OK
         return returnChairIds(statusCode=response.status_code, array=is_present['chairs'], userId=user_id)
+
+    def remove_chair_user(self, user, chair: model.ChairIn, response: Response):
+        if not user:
+            response.status_code = status.HTTP_401_UNAUTHORIZED
+            return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
+                               title="Usuário não encontrado",
+                               detail="Email não registrado")
+        else:
+            new = user['chairs']
+            new.pop(chair.chairId)
+            new_value = {"$set": {'chairs': new}}
+            filter_user = {'email': user['email']}
+            self.client.users['users'].update_one(filter_user, new_value)
+            response.status_code = status.HTTP_200_OK
+            return returnChairDeletion(statusCode=response.status_code, user_id=user['email'],
+                                       chair_ids=new)
