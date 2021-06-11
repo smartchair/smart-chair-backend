@@ -13,7 +13,19 @@ class ChairInfo(BaseModel):
     presence: bool
     noise: float
     lum: float
+    hum: float
     time: str
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {
+            ObjectId: str
+        }
+
+
+class GetPropModel(BaseModel):
+    day: str
+    chairId: str
 
     class Config:
         arbitrary_types_allowed = True

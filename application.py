@@ -7,6 +7,7 @@ from fastapi_login import LoginManager
 import model
 from apis import ChairInfoApi, UserApi
 from apis.QuestionsApi import QuestionApi
+from model.chair_info import GetPropModel
 
 application = FastAPI()
 
@@ -55,14 +56,14 @@ async def get_current_lum(chairId, user=Depends(manager)):
     return chair_apis.getCurrentLum(chairId)
 
 
-@application.get('/chair/all/temp/{day}/{chairId}')
-async def get_temp_all_day(chairId, day, user=Depends(manager)):
-    return chair_apis.getAllTempsDay(chair_id=chairId, day=day)
+@application.get('/chair/day/{prop}')
+async def get_prop_all_day(prop: str, getTempModel: GetPropModel, user=Depends(manager)):
+    return chair_apis.getAllPropDay(day=getTempModel.day, chair_id=getTempModel.chairId, prop=prop)
 
 
-@application.get('/chair/all/lum/{day}/{chairId}')
-async def get_lum_all_day(chairId, day, user=Depends(manager)):
-    return chair_apis.getAllLumsDay(chair_id=chairId, day=day)
+@application.get('/chair/all/{prop}/{chairId}')
+async def get_prop_all(prop: str, chairId: str):
+    return chair_apis.getAllProp(chairId, prop=prop)
 
 
 @application.post('/users/{userId}/add-chair')
