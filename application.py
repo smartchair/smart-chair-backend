@@ -47,7 +47,7 @@ async def login(data: model.UserLogin, response: Response):
 
 
 @application.get('/chair/current/{prop}/{chairId}')
-async def get_current_prop(chairId, prop, user=Depends(manager)):
+async def get_current_prop(prop, chairId, user=Depends(manager)):
     return chair_apis.getCurrentProp(chair_id=chairId, prop=prop)
 
 
