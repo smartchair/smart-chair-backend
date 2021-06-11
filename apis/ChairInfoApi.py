@@ -19,13 +19,9 @@ class ChairInfoApi:
         chair_info.id = new.inserted_id
         return returnChairInfo(statusCode=status.HTTP_200_OK, chair_info=chair_info)
 
-    def getCurrentTemp(self, chair_id: str):
+    def getCurrentProp(self, chair_id: str, prop: str):
         chair = self.db.find_one({"chairId": chair_id})
-        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName="currentTemp", value=chair['temp'])
-
-    def getCurrentLum(self, chair_id: str):
-        chair = self.db.find_one({"chairId": chair_id})
-        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName="currentLum", value=chair['lum'])
+        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName="current" + prop, value=chair[prop])
 
     def getAllPropDay(self, day: str, chair_id: str, prop: str):
         temps_array = []
@@ -37,7 +33,6 @@ class ChairInfoApi:
                 temps_array.append(item)
         return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName=prop, value=temps_array)
 
-    def getAllProp(self, chair_id: str, prop:str):
+    def getAllProp(self, chair_id: str, prop: str):
         doc = self.db.find(filter={"chairId": chair_id})
         return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName="temps", value=doc['temp'])
-

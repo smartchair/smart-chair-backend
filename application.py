@@ -46,14 +46,9 @@ async def login(data: model.UserLogin, response: Response):
     return user_apis.login(query_user(data.username), data, manager, response)
 
 
-@application.get('/chair/current/temp/{chairId}')
-async def get_current_temp(chairId, user=Depends(manager)):
-    return chair_apis.getCurrentTemp(chairId)
-
-
-@application.get('/chair/current/lum/{chairId}')
-async def get_current_lum(chairId, user=Depends(manager)):
-    return chair_apis.getCurrentLum(chairId)
+@application.get('/chair/current/{prop}/{chairId}')
+async def get_current_prop(chairId, prop, user=Depends(manager)):
+    return chair_apis.getCurrentProp(chair_id=chairId, prop=prop)
 
 
 @application.get('/chair/day/{prop}')
