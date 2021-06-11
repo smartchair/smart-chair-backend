@@ -35,4 +35,4 @@ class ChairInfoApi:
 
     def getAllProp(self, chair_id: str, prop: str):
         doc = self.db.find(filter={"chairId": chair_id})
-        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName="temps", value=doc['temp'])
+        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName=prop, value=doc[prop])
