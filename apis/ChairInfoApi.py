@@ -37,4 +37,4 @@ class ChairInfoApi:
         props_array = []
         for doc in self.db.find(filter={"chairId": chair_id}):
             props_array.append(doc[prop])
-        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName=prop, value=props_array)
+        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName=prop+'s', value=props_array)
