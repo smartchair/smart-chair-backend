@@ -21,7 +21,7 @@ class ChairInfoApi:
 
     def getCurrentProp(self, chair_id: str, prop: str):
         chair = self.db.find_one({"chairId": chair_id})
-        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName="current" + prop, value=chair[prop])
+        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName="current" + prop.capitalize(), value=chair[prop])
 
     def getAllPropDay(self, day: str, chair_id: str, prop: str):
         temps_array = []
@@ -31,10 +31,10 @@ class ChairInfoApi:
             if day_doc.day == day_arg.day:
                 item = {"hour": day_doc.strftime("%H:%M:%S"), prop: doc[prop]}
                 temps_array.append(item)
-        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName=prop, value=temps_array)
+        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName=prop.capitalize(), value=temps_array)
 
     def getAllProp(self, chair_id: str, prop: str):
         props_array = []
         for doc in self.db.find(filter={"chairId": chair_id}):
             props_array.append(doc[prop])
-        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName=prop+'s', value=props_array)
+        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName=prop.capitalize()+'s', value=props_array)
