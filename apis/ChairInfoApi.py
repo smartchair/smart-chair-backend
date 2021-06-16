@@ -17,8 +17,8 @@ class ChairInfoApi:
 
         timezone = pytz.timezone('America/Sao_Paulo')
         date = timezone.localize(datetime.now())
-        date.hour = (date.hour - 3)
-        time = date.strftime("%d-%m-%y %H:%M:%S")
+        official = date.replace(hour=(date.hour-3))
+        time = official.strftime("%d-%m-%y %H:%M:%S")
 
         chairInfo_db = model.ChairInfo(id=chair_info.id,
                                        chairId=chair_info.chairId,
