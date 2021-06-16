@@ -16,15 +16,6 @@ class ChairInfo(BaseModel):
     hum: float
     time: str
 
-    def setObject(self, chairId, temp, presence, noise, lum, hum, time):
-        self.chairId = chairId
-        self.temp = temp
-        self.presence = presence
-        self.noise = noise
-        self.lum = lum
-        self.hum = hum
-        self.time = time
-
     class Config:
         arbitrary_types_allowed = True
         json_encoders = {
