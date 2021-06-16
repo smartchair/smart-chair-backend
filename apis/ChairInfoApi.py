@@ -20,8 +20,8 @@ class ChairInfoApi:
         date = timezone.localize(datetime.now())
         time = date.strftime("%d-%m-%y %H:%M:%S")
 
-        chairInfo_db = model.ChairInfo(chairId=chair_info.chairId, temp=chair_info.temp, presence=chair_info.presence,
-                                       noise=chair_info.noise, lum=chair_info.lum, hum=chair_info.hum, time=time)
+        chairInfo_db = model.ChairInfo(id=chair_info.id,chairId=chair_info.chairId, temp=chair_info.temp, presence=chair_info.presence,
+                                       noise=chair_info.noise, lum=chair_info.lum, hum=chair_info.hum, time=time,)
         new = self.db["chairs"].insert_one(chairInfo_db.dict(by_alias=True))
         chairInfo_db.id = new.inserted_id
         return returnChairInfo(statusCode=status.HTTP_200_OK, chair_info=chair_info)

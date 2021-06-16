@@ -24,6 +24,7 @@ class ChairInfo(BaseModel):
 
 
 class ChairInfoIn(BaseModel):
+    id: Optional[PyObjectId] = Field(alias='_id')
     chairId: str
     temp: float
     presence: bool
