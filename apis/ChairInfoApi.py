@@ -14,8 +14,6 @@ class ChairInfoApi:
         self.db = self.client.chairs
 
     def log_chair_info(self, chair_info: model.ChairInfoIn):
-        if hasattr(chair_info, 'id'):
-            delattr(chair_info, 'id')
         timezone = pytz.timezone('America/Sao_Paulo')
         date = timezone.localize(datetime.now())
         time = date.strftime("%d-%m-%y %H:%M:%S")
