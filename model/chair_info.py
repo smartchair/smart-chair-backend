@@ -16,8 +16,7 @@ class ChairInfo(BaseModel):
     hum: float
     time: str
 
-    def __init__(self, chairId, temp, presence, noise, lum, hum, time, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    def setObject(self, chairId, temp, presence, noise, lum, hum, time):
         self.chairId = chairId
         self.temp = temp
         self.presence = presence
