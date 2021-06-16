@@ -16,6 +16,31 @@ class ChairInfo(BaseModel):
     hum: float
     time: str
 
+    def __init__(self, chairId, temp, presence, noise, lum, hum, time, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.chairId = chairId
+        self.temp = temp
+        self.presence = presence
+        self.noise = noise
+        self.lum = lum
+        self.hum = hum
+        self.time = time
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {
+            ObjectId: str
+        }
+
+
+class ChairInfoIn(BaseModel):
+    chairId: str
+    temp: float
+    presence: bool
+    noise: float
+    lum: float
+    hum: float
+
     class Config:
         arbitrary_types_allowed = True
         json_encoders = {
@@ -26,6 +51,18 @@ class ChairInfo(BaseModel):
 class GetPropModel(BaseModel):
     day: str
     chairId: str
+
+    class Config:
+        arbitrary_types_allowed = True
+        json_encoders = {
+            ObjectId: str
+        }
+
+
+class postLum(BaseModel):
+    userId: str
+    deviceType: str
+    lum: float
 
     class Config:
         arbitrary_types_allowed = True

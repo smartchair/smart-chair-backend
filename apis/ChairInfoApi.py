@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import pytz
 from starlette import status
 
 import model
@@ -10,22 +11,27 @@ class ChairInfoApi:
 
     def __init__(self, client):
         self.client = client
-        self.db = self.client.chairs["chairs"]
+        self.db = self.client.chairs
 
-    def log_chair_info(self, chair_info: model.ChairInfo):
-        if hasattr(chair_info, 'id'):
-            delattr(chair_info, 'id')
-        new = self.db.insert_one(chair_info.dict(by_alias=True))
-        chair_info.id = new.inserted_id
+    def log_chair_info(self, chair_info: model.ChairInfoIn):
+        timezone = pytz.timezone('America/Sao_Paulo')
+        date = timezone.localize(datetime.now())
+        time = date.strftime("%d-%m-%y %H:%M:%S")
+
+        chairInfo_db = model.ChairInfo(chairId=chair_info.chairId, temp=chair_info.temp, presence=chair_info.presence,
+                                       noise=chair_info.noise, lum=chair_info.lum, hum=chair_info.hum, time=time)
+        new = self.db["chairs"].insert_one(chairInfo_db.dict(by_alias=True))
+        chairInfo_db.id = new.inserted_id
         return returnChairInfo(statusCode=status.HTTP_200_OK, chair_info=chair_info)
 
     def getCurrentProp(self, chair_id: str, prop: str):
-        chair = self.db.find_one({"chairId": chair_id})
-        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName="current" + prop.capitalize(), value=chair[prop])
+        chair = self.db["chairs"].find_one({"chairId": chair_id})
+        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName="current" + prop.capitalize(),
+                                   value=chair[prop])
 
     def getAllPropDay(self, day: str, chair_id: str, prop: str):
         temps_array = []
-        for doc in self.db.find(filter={"chairId": chair_id}):
+        for doc in self.db["chairs"].find(filter={"chairId": chair_id}):
             day_doc = datetime.strptime(doc['time'], '%d-%m-%y %H:%M:%S')
             day_arg = datetime.strptime(day, "%d-%m-%y")
             if day_doc.day == day_arg.day:
@@ -35,6 +41,11 @@ class ChairInfoApi:
 
     def getAllProp(self, chair_id: str, prop: str):
         props_array = []
-        for doc in self.db.find(filter={"chairId": chair_id}):
+        for doc in self.db["chairs"].find(filter={"chairId": chair_id}):
             props_array.append(doc[prop])
-        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName=prop.capitalize()+'s', value=props_array)
+        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName=prop.capitalize() + 's',
+                                   value=props_array)
+
+    def postLum(self, postLum: model.postLum):
+        new = self.db["lums"].insert_one(postLum.dict(by_alias=True))
+        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName='Lum', value=new)

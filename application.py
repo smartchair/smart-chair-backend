@@ -27,7 +27,7 @@ async def hello_world():
 
 
 @application.post('/log/info')
-async def log_info(chair_info: model.ChairInfo):
+async def log_info(chair_info: model.ChairInfoIn):
     return chair_apis.log_chair_info(chair_info)
 
 
@@ -84,3 +84,8 @@ async def post_answer(answer: model.AnswerIn, user=Depends(manager)):
 @application.get('/users/{userId}/get-chairs')
 async def get_chairs(userId, response: Response, user=Depends(manager)):
     return user_apis.get_all_chairs(userId, response)
+
+
+@application.post('/chair/mob/lum')
+async def post_lum(lumInfo: model.postLum, user=Depends(manager)):
+    return chair_apis.postLum(lumInfo)
