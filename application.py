@@ -89,3 +89,8 @@ async def get_chairs(userId, response: Response, user=Depends(manager)):
 @application.post('/chair/mob/lum')
 async def post_lum(lumInfo: model.postLum, user=Depends(manager)):
     return chair_apis.postLum(lumInfo)
+
+
+@application.get('/chair/mob/{userId}/lums')
+async def get_lums(userId: str):
+    return chair_apis.getAllLums(userId)

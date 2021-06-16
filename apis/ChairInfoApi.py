@@ -17,7 +17,7 @@ class ChairInfoApi:
 
         timezone = pytz.timezone('America/Sao_Paulo')
         date = timezone.localize(datetime.now())
-        official = date.replace(hour=(date.hour-3))
+        official = date.replace(hour=(date.hour - 3))
         time = official.strftime("%d-%m-%y %H:%M:%S")
 
         chairInfo_db = model.ChairInfo(id=chair_info.id,
@@ -59,3 +59,10 @@ class ChairInfoApi:
     def postLum(self, postLum: model.postLum):
         new = self.db["lums"].insert_one(postLum.dict(by_alias=True))
         return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName='Lum', value=postLum)
+
+    def getAllLums(self, userId: str):
+        lumArray = []
+        for doc in self.db['lums'].find(filter={"userId": userId}):
+            lumArray.append(doc['lum'])
+        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName='Lums',
+                                   value=lumArray)
