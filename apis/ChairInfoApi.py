@@ -48,4 +48,4 @@ class ChairInfoApi:
 
     def postLum(self, postLum: model.postLum):
         new = self.db["lums"].insert_one(postLum.dict(by_alias=True))
-        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName='Lum', value=new)
+        return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName='Lum', value=postLum)
