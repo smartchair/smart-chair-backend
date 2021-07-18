@@ -67,6 +67,19 @@ class UserApi:
             return returnChairAddition(statusCode=response.status_code, user_id=user['email'],
                                        chair_ids=new)
 
+    def change_password(self, user, password: str, response: Response):
+        if not user:
+            response.status_code = status.HTTP_401_UNAUTHORIZED
+            return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,
+                               title="Usuário não encontrado",
+                               detail="Email não registrado")
+        else:
+            hashpass = generateHash(password)
+            new_value = {'$set': {'password': hashpass}}
+            filter_user = {'email': user["email"]}
+            self.client.users['users'].update_one(filter_user, new_value)
+            response.status_code = status.HTTP_200_OK
+
     def get_all_chairs(self, user_id, response: Response):
         users_db = self.client.users['users']
         is_present = users_db.find_one({"email": user_id})

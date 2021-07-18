@@ -69,6 +69,13 @@ def returnChairAddition(statusCode: int, user_id: str, chair_ids: []):
         }]
     }
 
+def returnChangePassword(statusCode:int):
+    return {
+        "data":[{
+            "status":statusCode,
+            "message":"Senha atualizada com sucesso"
+        }]
+    }
 
 def returnChairDeletion(statusCode: int, user_id: str, chair_ids: []):
     return {

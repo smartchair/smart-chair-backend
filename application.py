@@ -66,6 +66,11 @@ async def add_user_chair(userId, chairUser: model.ChairIn, response: Response, u
     return user_apis.add_chair_user(user=query_user(userId), response=response, chair=chairUser)
 
 
+@application.post('/users/reset-password')
+async def reset_password(response: Response, user: model.UserLogin):
+    return user_apis.change_password(user=query_user(user.username), password=user.password, response=response)
+
+
 @application.post('/users/{userId}/remove-chair')
 async def remove_user_chair(userId, chairUser: model.ChairIn, response: Response, user=Depends(manager)):
     return user_apis.remove_chair_user(user=query_user(userId), response=response, chair=chairUser)
