@@ -68,7 +68,7 @@ class ChairInfoApi:
         else:
             for doc in chairs:
                 day_doc = datetime.strptime(doc['time'], '%d-%m-%y %H:%M:%S')
-                item = {"hour": day_doc.strftime("%H:%M:%S"), prop: doc[prop]}
+                item = {"hour": day_doc.strftime('%d-%m-%y %H:%M:%S'), prop: doc[prop]}
                 props_array.append(item)
             return returnChairProperty(statusCode=status.HTTP_200_OK,
                                        propertyName=prop.capitalize() + 's',
