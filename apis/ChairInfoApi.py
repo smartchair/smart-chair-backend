@@ -1,5 +1,6 @@
 from datetime import datetime
 
+import pymongo
 import pytz
 from starlette import status
 
@@ -15,10 +16,10 @@ class ChairInfoApi:
 
     def log_chair_info(self, chair_info: model.ChairInfoIn):
 
-        timezone = pytz.timezone('America/Sao_Paulo')
-        date = timezone.localize(datetime.now())
-        official = date.replace(hour=(date.hour - 3))
-        time = official.strftime("%d-%m-%y %H:%M:%S")
+        date = datetime.now()
+        timezone = pytz.timezone("America/Sao_Paulo")
+        date_and_time_sp = date.astimezone(timezone)
+        time = date_and_time_sp.strftime("%d-%m-%y %H:%M:%S")
 
         chairInfo_db = model.ChairInfo(id=chair_info.id,
                                        chairId=chair_info.chairId,
@@ -35,7 +36,7 @@ class ChairInfoApi:
         return returnChairInfo(statusCode=status.HTTP_200_OK, chair_info=chair_info)
 
     def getCurrentProp(self, chair_id: str, prop: str):
-        chair = self.db["chairs"].find_one({"chairId": chair_id})
+        chair = self.db["chairs"].find_one({"chairId": chair_id}, sort=[('_id', pymongo.DESCENDING)])
         return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName="current" + prop.capitalize(),
                                    value=chair[prop])
 
@@ -52,12 +53,14 @@ class ChairInfoApi:
     def getAllProp(self, chair_id: str, prop: str):
         props_array = []
         for doc in self.db["chairs"].find(filter={"chairId": chair_id}):
-            props_array.append(doc[prop])
+            day_doc = datetime.strptime(doc['time'], '%d-%m-%y %H:%M:%S')
+            item = {"hour": day_doc.strftime("%H:%M:%S"), prop: doc[prop]}
+            props_array.append(item)
         return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName=prop.capitalize() + 's',
                                    value=props_array)
 
     def postLum(self, postLum: model.postLum):
-        new = self.db["lums"].insert_one(postLum.dict(by_alias=True))
+        self.db["lums"].insert_one(postLum.dict(by_alias=True))
         return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName='Lum', value=postLum)
 
     def getAllLums(self, userId: str):
