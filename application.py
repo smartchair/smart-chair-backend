@@ -51,7 +51,7 @@ async def get_current_prop(prop, chairId, user=Depends(manager)):
     return chair_apis.getCurrentProp(chair_id=chairId, prop=prop)
 
 
-@application.get('/chair/day/{prop}')
+@application.post('/chair/day/{prop}')
 async def get_prop_all_day(prop: str, getTempModel: GetPropModel, user=Depends(manager)):
     return chair_apis.getAllPropDay(day=getTempModel.day, chair_id=getTempModel.chairId, prop=prop)
 
