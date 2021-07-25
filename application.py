@@ -3,6 +3,7 @@ import os
 import pymongo as pymongo
 from fastapi import FastAPI, Response, Depends
 from fastapi_login import LoginManager
+from fastapi.middleware.cors import CORSMiddleware
 
 import model
 from apis import ChairInfoApi, UserApi
@@ -10,6 +11,14 @@ from apis.QuestionsApi import QuestionApi
 from model.chair_info import GetPropModel
 
 application = FastAPI()
+
+application.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*'],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 ClIENT = pymongo.MongoClient(os.environ.get('MONGOURL'))
 SECRET = os.environ.get('SECRET_KEY')
