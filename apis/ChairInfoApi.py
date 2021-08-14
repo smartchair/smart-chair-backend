@@ -96,7 +96,6 @@ class ChairInfoApi:
         dates = getLast5Days(date)
         means = []
         chairs = self.db["chairs"].find(filter={"chairId": chair_id}, sort=[('_id', pymongo.DESCENDING)])
-        print(chairs)
         if chairs is None:
             return returnChairPropertyEmpty()
         else:
@@ -108,5 +107,4 @@ class ChairInfoApi:
                     print(item)
                     means.append(item)
 
-        print(means)
         return getMeans(dates, means, prop)

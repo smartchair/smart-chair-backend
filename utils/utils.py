@@ -12,11 +12,12 @@ def getLast5Days(day: str):
         date_day.replace(day=date_day.day - 3),
         date_day.replace(day=date_day.day - 4)
     ]
-    print(array)
     return array
 
 
 def getMeans(dates: [], means: [], prop: str):
+    print(dates)
+    print(means)
     value0 = []
     value1 = []
     value2 = []
@@ -36,11 +37,6 @@ def getMeans(dates: [], means: [], prop: str):
         if value["dateTime"].day == dates[4].day:
             value4.append(value[prop])
 
-    print(value0)
-    print(value1)
-    print(value2)
-    print(value3)
-    print(value4)
     return [
         numpy.mean(value0),
         numpy.mean(value1),
