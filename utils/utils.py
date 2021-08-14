@@ -5,13 +5,15 @@ import numpy as numpy
 
 def getLast5Days(day: str):
     date_day = datetime.strptime(day, "%d-%m-%y")
-    return [
+    array = [
         date_day,
         date_day.replace(day=date_day.day - 1),
         date_day.replace(day=date_day.day - 2),
         date_day.replace(day=date_day.day - 3),
         date_day.replace(day=date_day.day - 4)
     ]
+    print(array)
+    return array
 
 
 def getMeans(dates: [], means: [], prop: str):

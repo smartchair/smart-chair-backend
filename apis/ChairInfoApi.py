@@ -95,7 +95,8 @@ class ChairInfoApi:
     def getPropMean(self, chair_id: str, prop: str, date: str):
         dates = getLast5Days(date)
         means = []
-        chairs = self.db["chairs"].find(filter={"chairId": chair_id}, sort=[('_id', pymongo.DESCENDING)], limit=5)
+        chairs = self.db["chairs"].find(filter={"chairId": chair_id}, sort=[('_id', pymongo.DESCENDING)])
+        print(chairs)
         if chairs is None:
             return returnChairPropertyEmpty()
         else:
@@ -104,5 +105,8 @@ class ChairInfoApi:
                 if day_doc in dates:
                     item = {"dateTime": day_doc,
                             prop: doc[prop]}
+                    print(item)
                     means.append(item)
+
+        print(means)
         return getMeans(dates, means, prop)
