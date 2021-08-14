@@ -11,13 +11,13 @@ from apis.QuestionsApi import QuestionApi
 from model.chair_info import GetPropModel
 
 application = FastAPI()
-
+origins = ["https://backend-smart-chair.herokuapp.com"]
 application.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:50951"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"]
+    allow_headers=["*"],
 )
 
 ClIENT = pymongo.MongoClient(os.environ.get('MONGOURL'))
@@ -66,7 +66,7 @@ async def get_prop_all_day(prop: str, getTempModel: GetPropModel, user=Depends(m
 
 
 @application.get('/chair/all/{prop}/{chairId}')
-async def get_prop_all(prop: str, chairId: str):
+async def get_prop_all(prop: str, chairId: str, user=Depends(manager)):
     return chair_apis.getAllProp(chairId, prop=prop)
 
 
