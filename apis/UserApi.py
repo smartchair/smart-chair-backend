@@ -43,8 +43,7 @@ class UserApi:
         if verify_password(user['password'], data.password):
             response.status_code = status.HTTP_200_OK
             access_token = manager.create_access_token(data={'sub': data.username})
-            manager.set_cookie(response, access_token)
-            response.set_cookie("access-token", access_token)
+            response.set_cookie("access-token", access_token, samesite="none", secure=True)
             return returnLogin(statusCode=response.status_code, access_token=access_token)
         else:
             response.status_code = status.HTTP_401_UNAUTHORIZED
