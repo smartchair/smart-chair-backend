@@ -23,6 +23,8 @@ def getMeans(dates: [], means: [], prop: str):
     value3 = []
     value4 = []
     for value in means:
+        print(value["dateTime"].day)
+        print(dates[0])
         if value["dateTime"].day == dates[0].day:
             value0.append(value[prop])
         if value["dateTime"].day == dates[1].day:
