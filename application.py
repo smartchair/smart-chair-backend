@@ -108,3 +108,8 @@ async def post_lum(lumInfo: model.postLum, user=Depends(manager)):
 @application.get('/chair/mob/{userId}/lums')
 async def get_lums(userId: str, user=Depends(manager)):
     return chair_apis.getAllLums(userId)
+
+
+@application.post("/chair/mean/{prop}")
+async def get_means(prop: str, info: GetPropModel):
+    return chair_apis.getPropMean(info.chairId, prop, info.day)

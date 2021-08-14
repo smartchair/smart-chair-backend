@@ -5,6 +5,7 @@ import pytz
 from starlette import status
 
 import model
+from utils import getLast5Days, getMeans
 from utils.jsonReturnUtils import returnChairInfo, returnChairProperty, returnChairPropertyEmpty
 
 
@@ -69,9 +70,7 @@ class ChairInfoApi:
             return returnChairPropertyEmpty()
         else:
             for doc in chairs:
-                day_doc = datetime.strptime(doc['time'], '%d-%m-%y %H:%M:%S')
-                item = {"hour": day_doc.strftime('%H:%M:%S'),
-                        "day": day_doc.strftime('%d-%m-%y'),
+                item = {"dateTime": doc['time'],
                         prop: doc[prop]}
                 props_array.append(item)
             return returnChairProperty(statusCode=status.HTTP_200_OK,
@@ -92,3 +91,18 @@ class ChairInfoApi:
                 lumArray.append(doc['lum'])
             return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName='Lums',
                                        value=lumArray)
+
+    def getPropMean(self, chair_id: str, prop: str, date: str):
+        dates = getLast5Days(date)
+        means = []
+        chairs = self.db["chairs"].find(filter={"chairId": chair_id}, sort=[('_id', pymongo.DESCENDING)], limit=5)
+        if chairs is None:
+            return returnChairPropertyEmpty()
+        else:
+            for doc in chairs:
+                day_doc = datetime.strptime(doc['time'], '%d-%m-%y %H:%M:%S')
+                if day_doc in dates:
+                    item = {"dateTime": day_doc,
+                            prop: doc[prop]}
+                    means.append(item)
+        return getMeans(dates, means, prop)
