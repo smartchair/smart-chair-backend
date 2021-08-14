@@ -11,7 +11,7 @@ from apis.QuestionsApi import QuestionApi
 from model.chair_info import GetPropModel
 
 application = FastAPI()
-origins = ["https://backend-smart-chair.herokuapp.com"]
+origins = ["*"]
 application.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
