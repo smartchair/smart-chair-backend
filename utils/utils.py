@@ -34,6 +34,11 @@ def getMeans(dates: [], means: [], prop: str):
         if value["dateTime"].day == dates[4].day:
             value4.append(value[prop])
 
+    print(value0)
+    print(value1)
+    print(value2)
+    print(value3)
+    print(value4)
     return [
         numpy.mean(value0),
         numpy.mean(value1),
