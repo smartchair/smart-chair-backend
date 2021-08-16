@@ -7,17 +7,16 @@ def getLast5Days(day: str):
     date_day = datetime.strptime(day, "%d-%m-%y")
     array = [
         date_day,
-        date_day.replace(day=date_day.day - 1),
-        date_day.replace(day=date_day.day - 2),
-        date_day.replace(day=date_day.day - 3),
-        date_day.replace(day=date_day.day - 4)
+        date_day.replace(day=date_day.day - 1).day,
+        date_day.replace(day=date_day.day - 2).day,
+        date_day.replace(day=date_day.day - 3).day,
+        date_day.replace(day=date_day.day - 4).day
     ]
     print(array)
     return array
 
 
 def getMeans(dates: [], means: [], prop: str):
-    print("means:",means)
     value0 = []
     value1 = []
     value2 = []
