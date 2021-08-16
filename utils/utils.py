@@ -18,7 +18,6 @@ def getLast5Days(day: str):
 
 def buildDayMonth(date: datetime):
     abc = datetime.strftime(date, "%d-%m-%y")
-    print(abc)
     return abc
 
 
