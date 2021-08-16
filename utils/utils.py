@@ -16,25 +16,27 @@ def getLast5Days(day: str):
 
 
 def getMeans(dates: [], means: [], prop: str):
-    print(dates)
-    print(means)
     value0 = []
     value1 = []
     value2 = []
     value3 = []
     value4 = []
     for value in means:
-        print(value["dateTime"].day)
-        print(dates[0])
-        if value["dateTime"].day == dates[0].day:
+        day = datetime.strptime(value['time'], '%d-%m-%y %H:%M:%S')
+        if day.day == dates[0].day:
+            print(day.day)
             value0.append(value[prop])
-        if value["dateTime"].day == dates[1].day:
+        if day.day == dates[1].day:
+            print(day.day)
             value1.append(value[prop])
-        if value["dateTime"].day == dates[2].day:
+        if day.day == dates[2].day:
+            print(day.day)
             value2.append(value[prop])
-        if value["dateTime"].day == dates[3].day:
+        if day.day == dates[3].day:
+            print(day.day)
             value3.append(value[prop])
-        if value["dateTime"].day == dates[4].day:
+        if day.day == dates[4].day:
+            print(day.day)
             value4.append(value[prop])
 
     return [
