@@ -52,9 +52,9 @@ class ChairInfoApi:
             return returnChairPropertyEmpty()
         else:
             for doc in chairs:
-                day_doc = datetime.strptime(doc['time'], '%d-%m-%y %H:%M:%S')
+                day_doc = datetime.strptime(doc['time'], '%d-%m-%y')
                 day_arg = datetime.strptime(day, "%d-%m-%y")
-                if day_doc.day == day_arg.day:
+                if day_doc == day_arg:
                     item = {"hour": day_doc.strftime('%H:%M:%S'),
                             "day": day_doc.strftime('%d-%m-%y'),
                             prop: doc[prop]}
