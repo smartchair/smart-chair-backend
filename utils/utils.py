@@ -43,8 +43,4 @@ def getMeans(dates: [], means: [], prop: str):
 
     return [
         numpy.mean(value0),
-        numpy.mean(value1),
-        numpy.mean(value2),
-        numpy.mean(value3),
-        numpy.mean(value4)
     ]
