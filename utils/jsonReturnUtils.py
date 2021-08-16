@@ -131,5 +131,5 @@ def returnAverageProps(valueArray: [], day: str):
         "averageLum": numpy.mean(valueArray[1]),
         "averageHum": numpy.mean(valueArray[2]),
         "averageNoise": numpy.mean(valueArray[3]),
-        "day": datetime.strptime(day, "%d-%m-%y")
+        "day": day
     }
