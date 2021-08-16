@@ -7,13 +7,18 @@ def getLast5Days(day: str):
     date_day = datetime.strptime(day, "%d-%m-%y")
     array = [
         date_day,
-        date_day.replace(day=date_day.day - 1).day,
-        date_day.replace(day=date_day.day - 2).day,
-        date_day.replace(day=date_day.day - 3).day,
-        date_day.replace(day=date_day.day - 4).day
+        date_day.replace(day=date_day.day - 1),
+        date_day.replace(day=date_day.day - 2),
+        date_day.replace(day=date_day.day - 3),
+        date_day.replace(day=date_day.day - 4)
     ]
     print(array)
     return array
+
+
+def buildDayMonth(date: datetime):
+    abc = date.replace(hour=0, minute=0, second=0, microsecond=0)
+    return abc
 
 
 def getMeans(dates: [], means: [], prop: str):

@@ -5,7 +5,7 @@ import pytz
 from starlette import status
 
 import model
-from utils import getLast5Days, getMeans
+from utils import getLast5Days, getMeans, buildDayMonth
 from utils.jsonReturnUtils import returnChairInfo, returnChairProperty, returnChairPropertyEmpty
 
 
@@ -101,8 +101,8 @@ class ChairInfoApi:
         else:
             for doc in chairs:
                 day_doc = datetime.strptime(doc['time'], '%d-%m-%y %H:%M:%S')
-                if day_doc.day in dates:
-
+                test = buildDayMonth(day_doc)
+                if test in dates:
                     item = {"dateTime": day_doc,
                             prop: doc[prop]}
                     print(item)
