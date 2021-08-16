@@ -17,7 +17,9 @@ def getLast5Days(day: str):
 
 
 def buildDayMonth(date: datetime):
-    return datetime.strftime(date, "%d-%m-%y")
+    abc = datetime.strftime(date, "%d-%m-%y")
+    print(abc)
+    return abc
 
 
 def getMeans(dates: [], means: [], prop: str):
