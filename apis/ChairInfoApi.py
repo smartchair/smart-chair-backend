@@ -105,7 +105,6 @@ class ChairInfoApi:
                 if test in dates:
                     item = {"dateTime": day_doc,
                             prop: doc[prop]}
-                    print(item)
                     means.append(item)
 
-        return getMeans(dates, means, prop)
+        return getMeans(dates, means)

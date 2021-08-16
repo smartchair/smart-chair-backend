@@ -1,4 +1,7 @@
+from datetime import datetime
 from typing import Any
+
+import numpy
 
 import model
 
@@ -116,4 +119,17 @@ def returnChairIds(statusCode: int, array: [], userId: str):
             "userId": userId,
             'chairs': array
         }]
+    }
+
+
+def returnAverageProps(valueArray: [], day: str):
+    for a in valueArray:
+        if not a:
+            a.append(0)
+    return {
+        "averageTemp": numpy.mean(valueArray[0]),
+        "averageLum": numpy.mean(valueArray[1]),
+        "averageHum": numpy.mean(valueArray[2]),
+        "averageNoise": numpy.mean(valueArray[3]),
+        "day": datetime.strptime(day, "%d-%m-%y")
     }
