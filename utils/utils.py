@@ -6,19 +6,18 @@ import numpy as numpy
 def getLast5Days(day: str):
     date_day = datetime.strptime(day, "%d-%m-%y")
     array = [
-        date_day,
-        date_day.replace(day=date_day.day - 1),
-        date_day.replace(day=date_day.day - 2),
-        date_day.replace(day=date_day.day - 3),
-        date_day.replace(day=date_day.day - 4)
+        datetime.strftime(date_day, "%d-%m-%y"),
+        datetime.strftime(date_day.replace(day=date_day.day - 1), "%d-%m-%y"),
+        datetime.strftime(date_day.replace(day=date_day.day - 2), "%d-%m-%y"),
+        datetime.strftime(date_day.replace(day=date_day.day - 3), "%d-%m-%y"),
+        datetime.strftime(date_day.replace(day=date_day.day - 4), "%d-%m-%y")
     ]
     print(array)
     return array
 
 
 def buildDayMonth(date: datetime):
-    dt = date.replace(hour=0, minute=0, second=0, microsecond=0)
-    return dt
+    return datetime.strftime(date, "%d-%m-%y")
 
 
 def getMeans(dates: [], means: [], prop: str):
