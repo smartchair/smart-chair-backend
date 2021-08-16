@@ -111,5 +111,5 @@ async def get_lums(userId: str, user=Depends(manager)):
 
 
 @application.post("/chair/average")
-async def get_average(info: GetPropModel):
+async def get_average(info: GetPropModel,user=Depends(manager)):
     return chair_apis.getPropAverage(info.chairId, info.day)
