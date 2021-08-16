@@ -17,8 +17,8 @@ def getLast5Days(day: str):
 
 
 def buildDayMonth(date: datetime):
-    abc = date.replace(hour=0, minute=0, second=0, microsecond=0)
-    return abc
+    dt = date.replace(hour=0, minute=0, second=0, microsecond=0)
+    return dt
 
 
 def getMeans(dates: [], means: [], prop: str):
@@ -28,7 +28,7 @@ def getMeans(dates: [], means: [], prop: str):
     value3 = []
     value4 = []
     for value in means:
-        day = datetime.strptime(value['time'], '%d-%m-%y %H:%M:%S')
+        day = datetime.strptime(value['dateTime'], '%d-%m-%y %H:%M:%S')
         print(day.day)
         if day.day == dates[0].day:
             value0.append(value[prop])
