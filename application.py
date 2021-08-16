@@ -110,6 +110,6 @@ async def get_lums(userId: str, user=Depends(manager)):
     return chair_apis.getAllLums(userId)
 
 
-@application.post("/chair/mean/{prop}")
-async def get_means(prop: str, info: GetPropModel):
-    return chair_apis.getPropMean(info.chairId, prop, info.day)
+@application.post("/chair/average")
+async def get_average(info: GetPropModel):
+    return chair_apis.getPropAverage(info.chairId, info.day)

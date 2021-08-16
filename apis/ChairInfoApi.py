@@ -5,7 +5,7 @@ import pytz
 from starlette import status
 
 import model
-from utils import getLast5Days, getMeans, buildDayMonth
+from utils import getLast5Days, getAverages, buildDayMonth
 from utils.jsonReturnUtils import returnChairInfo, returnChairProperty, returnChairPropertyEmpty
 
 
@@ -92,7 +92,7 @@ class ChairInfoApi:
             return returnChairProperty(statusCode=status.HTTP_200_OK, propertyName='Lums',
                                        value=lumArray)
 
-    def getPropMean(self, chair_id: str, prop: str, date: str):
+    def getPropAverage(self, chair_id: str, date: str):
         dates = getLast5Days(date)
         means = []
         chairs = self.db["chairs"].find(filter={"chairId": chair_id}, sort=[('_id', pymongo.DESCENDING)])
@@ -107,4 +107,4 @@ class ChairInfoApi:
                             "doc": doc}
                     means.append(item)
 
-        return getMeans(dates, means)
+        return getAverages(dates, means)

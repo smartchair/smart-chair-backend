@@ -1,7 +1,5 @@
 from datetime import datetime
 
-import numpy as numpy
-
 from utils.jsonReturnUtils import returnAverageProps
 
 
@@ -20,14 +18,14 @@ def buildDayMonth(date: datetime):
     return datetime.strftime(date, "%d-%m-%y")
 
 
-def getMeans(dates: [], means: []):
+def getAverages(dates: [], averages: []):
     value0 = [[], [], [], []]
     value1 = [[], [], [], []]
     value2 = [[], [], [], []]
     value3 = [[], [], [], []]
     value4 = [[], [], [], []]
     returns = []
-    for value in means:
+    for value in averages:
         doc = value["doc"]
         day = datetime.strftime(value['dateTime'], "%d-%m-%y")
         if day == dates[0]:
