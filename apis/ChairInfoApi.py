@@ -102,6 +102,7 @@ class ChairInfoApi:
             for doc in chairs:
                 day_doc = datetime.strptime(doc['time'], '%d-%m-%y %H:%M:%S')
                 if day_doc in dates:
+                    print("presente")
                     item = {"dateTime": day_doc,
                             prop: doc[prop]}
                     print(item)
