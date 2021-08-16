@@ -104,7 +104,7 @@ class ChairInfoApi:
                 test = buildDayMonth(day_doc)
                 if test in dates:
                     item = {"dateTime": day_doc,
-                            prop: doc[prop]}
+                            "doc": doc}
                     means.append(item)
 
         return getMeans(dates, means)
