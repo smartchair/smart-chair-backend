@@ -28,16 +28,17 @@ def getMeans(dates: [], means: [], prop: str):
     value3 = []
     value4 = []
     for value in means:
-        print(value['dateTime'].day)
-        if value['dateTime'].day == dates[0].day:
+        day = datetime.strftime(value['dateTime'], "%d-%m-%y")
+        print(day)
+        if day == dates[0]:
             value0.append(value[prop])
-        if value['dateTime'].day == dates[1].day:
+        if day == dates[1]:
             value1.append(value[prop])
-        if value['dateTime'].day == dates[2].day:
+        if day == dates[2]:
             value2.append(value[prop])
-        if value['dateTime'].day == dates[3].day:
+        if day == dates[3]:
             value3.append(value[prop])
-        if value['dateTime'].day == dates[4].day:
+        if day == dates[4]:
             value4.append(value[prop])
 
     return [
