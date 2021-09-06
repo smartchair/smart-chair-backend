@@ -6,7 +6,8 @@ from starlette import status
 
 import model
 from utils import getLast5Days, getAverages, buildDayMonth
-from utils.jsonReturnUtils import returnChairInfo, returnChairProperty, returnChairPropertyEmpty
+from utils.jsonReturnUtils import returnChairInfo, returnChairProperty, returnChairPropertyEmpty, \
+    returnCurrentChairProperty
 
 
 class ChairInfoApi:
@@ -41,9 +42,15 @@ class ChairInfoApi:
         if chair is None:
             return returnChairPropertyEmpty()
         else:
-            return returnChairProperty(statusCode=status.HTTP_200_OK,
-                                       propertyName="current" + prop.capitalize(),
-                                       value=chair[prop])
+            day_doc = datetime.strptime(chair['time'], '%d-%m-%y %H:%M:%S')
+            time = {
+                "hour": day_doc.strftime('%H:%M:%S'),
+                "day": day_doc.strftime('%d-%m-%y'),
+            }
+            return returnCurrentChairProperty(statusCode=status.HTTP_200_OK,
+                                              propertyName="current" + prop.capitalize(),
+                                              value=chair[prop],
+                                              time=time)
 
     def getAllPropDay(self, day: str, chair_id: str, prop: str):
         temps_array = []

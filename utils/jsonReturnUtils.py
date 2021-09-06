@@ -54,6 +54,16 @@ def returnChairProperty(statusCode: int, propertyName: str, value: Any):
     }
 
 
+def returnCurrentChairProperty(statusCode: int, propertyName: str, value: Any, time: Any):
+    return {
+        "data": [{
+            "status": statusCode,
+            propertyName: value,
+            "time": time
+        }]
+    }
+
+
 def returnChairPropertyEmpty():
     return {
         "data": [{

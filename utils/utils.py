@@ -1,16 +1,21 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from utils.jsonReturnUtils import returnAverageProps
 
 
 def getLast5Days(day: str):
     date_day = datetime.strptime(day, "%d-%m-%y")
+
+    d1 = (date_day - timedelta(days=1))
+    d2 = (date_day - timedelta(days=2))
+    d3 = (date_day - timedelta(days=3))
+    d4 = (date_day - timedelta(days=4))
     return [
         datetime.strftime(date_day, "%d-%m-%y"),
-        datetime.strftime(date_day.replace(day=date_day.day - 1), "%d-%m-%y"),
-        datetime.strftime(date_day.replace(day=date_day.day - 2), "%d-%m-%y"),
-        datetime.strftime(date_day.replace(day=date_day.day - 3), "%d-%m-%y"),
-        datetime.strftime(date_day.replace(day=date_day.day - 4), "%d-%m-%y")
+        datetime.strftime(d1, "%d-%m-%y"),
+        datetime.strftime(d2, "%d-%m-%y"),
+        datetime.strftime(d3, "%d-%m-%y"),
+        datetime.strftime(d4, "%d-%m-%y")
     ]
 
 
