@@ -44,7 +44,7 @@ class UserApi:
             response.status_code = status.HTTP_200_OK
             access_token = manager.create_access_token(data={'sub': data.username})
             response.set_cookie("access-token", access_token, samesite="none", secure=True)
-            return returnLogin(statusCode=response.status_code, access_token=access_token)
+            return returnLogin(statusCode=response.status_code, access_token=access_token, userName=user['name'])
         else:
             response.status_code = status.HTTP_401_UNAUTHORIZED
             return returnError(statusCode=status.HTTP_401_UNAUTHORIZED,

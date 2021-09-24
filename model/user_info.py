@@ -11,6 +11,7 @@ class UserInfo(BaseModel):
     email: str
     password: Any
     chairs: dict
+    name: str
 
     class Config:
         arbitrary_types_allowed = True

@@ -27,11 +27,12 @@ def returnCreateUser(statusCode: int, data: model.UserInfo):
     }
 
 
-def returnLogin(statusCode: int, access_token: Any):
+def returnLogin(statusCode: int, access_token: Any,userName:str):
     return {
         "data": [{
             "status": statusCode,
-            "token": access_token
+            "token": access_token,
+            "userName": userName
         }]
     }
 
